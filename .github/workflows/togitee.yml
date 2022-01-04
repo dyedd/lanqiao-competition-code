@@ -1,0 +1,20 @@
+name: 'GitHub To Gitee Mirror'
+
+on:
+  # 每当 push 到 main 分支时触发部署
+  push:
+    branches: [main]
+  # 手动触发部署
+  workflow_dispatch:
+
+jobs:
+  mirror_to_gitee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Mirror to gitee'
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/dyedd
+          dst: gitee/Dye
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
