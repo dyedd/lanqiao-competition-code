@@ -28,13 +28,13 @@ jobs:
         key: ${{ runner.os }}-hub-repos-cache-${{ steps.get-time.outputs.date }}
         restore-keys: ${{ runner.os }}-hub-repos-cache
 
-      - name: 'Mirror to gitee'
-        uses: Yikun/hub-mirror-action@master
-        with:
-          src: github/dyedd
-          dst: gitee/Dye
-          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-          dst_token: ${{ secrets.GITEE_TOKEN }}
-          cache_path: /github/workspace/hub-mirror-cache
-          force_update: true
-          static_list: 'lanqiao-competition-code'
+    - name: 'Mirror to gitee'
+      uses: Yikun/hub-mirror-action@master
+      with:
+        src: github/dyedd
+        dst: gitee/Dye
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token: ${{ secrets.GITEE_TOKEN }}
+        cache_path: /github/workspace/hub-mirror-cache
+        force_update: true
+        static_list: 'lanqiao-competition-code'
