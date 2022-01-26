@@ -1,6 +1,7 @@
 import { defineUserConfig } from 'vuepress'
 import type { DefaultThemeOptions } from 'vuepress'
 import sidebar from './configs/sidebar'
+import navbar from './configs/navbar'
 
 export default defineUserConfig<DefaultThemeOptions>({
   // 站点配置
@@ -16,9 +17,6 @@ export default defineUserConfig<DefaultThemeOptions>({
   themeConfig: {
     logo: './logo.png',
     sidebar: sidebar,
-    navbar: [
-      { text: '主页', link: '/' },
-      { text: 'HTML', link: '/html' },
-    ],
+    navbar: navbar,
   },
 })
