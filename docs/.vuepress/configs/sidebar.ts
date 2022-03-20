@@ -42,9 +42,61 @@ export default {
       ],
     },
     {
-      text: '版本3',
+      text: 'CSS3',
       children: [
         '/css/css3.md',
+      ],
+    },
+  ],
+  '/js': [
+    {
+      text: '基础知识',
+      children: [
+        '/js/basic.md',
+      ],
+    },
+    {
+      text: '进阶知识',
+      children: [
+        '/js/senior.md',
+      ],
+    },
+    {
+      text: 'BOM与DOM',
+      children: [
+        '/js/dom.md',
+      ],
+    },
+    {
+      text: 'ES6',
+      children: [
+        '/js/es6.md',
+      ],
+    },
+    {
+      text: 'ES6',
+      children: [
+        '/js/es6.md',
+      ],
+    },
+    {
+      text: 'node.js',
+      children: [
+        '/js/nodejs.md',
+      ],
+    },
+    {
+      text: 'express',
+      children: [
+        '/js/express.md',
+      ],
+    },
+  ],
+  '/jq': [
+    {
+      text: '基础知识',
+      children: [
+        '/jq/basic.md',
       ],
     },
   ],
