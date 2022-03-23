@@ -1,4 +1,55 @@
+
+
 # JavaScript BOM 及 DOM 编程
+
+## Js的组成
+
+![image-20220322171114857](https://gitee.com/Dye/statics/raw/master/img/202203221711959.png)
+
+
+
+- **JS** **基础阶段**
+  - 我们学习的是 ECMAScript 标准规定的基本语法
+  - 要求同学们掌握 JS 基础语法
+  - 只学习基本语法，做不了常用的网页交互效果
+  - 目的是为了 JS 后面的课程打基础、做铺垫
+- Web APIs阶段
+  - Web APIs 是 W3C 组织的标准
+  - Web APIs 我们主要学习 DOM 和 BOM
+  - Web APIs 是我们 JS 所独有的部分
+  - 我们主要学习页面交互功能
+  - 需要使用 JS 基础的课程内容做基础
+
+### API
+
+API（Application Programming Interface,应用程序编程接口）是一些预先定义的函数，目的是提供应用程序与开发人员基于某软件或硬件得以访问一组例程的能力，而又无需访问源码，或理解内部工作机制的细节。
+
+简单理解： **API** **是给程序员提供的一种工具，以便能更轻松的实现想要完成的功能。**
+
+比如手机充电的接口：
+
+> 我们要实现充电这个功能：
+>
+> - 我们不关心手机内部变压器，内部怎么存储电等
+> - 我们不关心这个充电线怎么制作的
+> - 我们只知道，我们拿着充电线插进充电接口就可以充电
+> - 这个充电接口就是一个 API 
+
+### **Web API** 
+
+**Web API** 是浏览器提供的一套操作浏览器功能和页面元素的 API ( BOM 和 DOM )。
+
+现阶段我们主要针对于浏览器讲解常用的 API , 主要针对浏览器做交互效果。
+
+比如我们想要浏览器弹出一个警示框， 直接使用 alert(‘弹出’)
+
+MDN 详细 API : https://developer.mozilla.org/zh-CN/docs/Web/API
+
+因为 Web API 很多，所以我们将这个阶段称为 **Web APIs**
+
+
+
+
 
 ## BOM 介绍
 
@@ -241,9 +292,13 @@ history 对象包含用户在浏览器中访问过的 URL，提供了用户最�
 | forward() | 加载 history 列表中的下一个 URL，同“前进”按钮 | history.forward()                             |
 | go()      | 加载 history 列表中的某个具体页面             | history.go(-1) 等同与 back()                  |
 
-## DOM 操作
+## DOM
 
 ### DOM 简介
+
+> 文档对象模型（Document Object Model，简称 DOM），是 W3C 组织推荐的处理可扩展标记语言（HTML或者XML）的标准编程接口。
+>
+> W3C 已经定义了一系列的 DOM 接口，通过这些 DOM 接口可以改变网页的内容、结构和样式。
 
 document 是一个比较特殊的对象，它既是浏览器对象模型 BOM 中的一个对象（属于 window 对象的下级对象），同时也表示文档对象模型 DOM 中整个 HTML 文档。因为 document 对象非常重要，所以我们将 document 对象的属性和方法分开讲解，并且在 document 对象讲解属性和方法之前，简要介绍一下 document 对象下的元素集合。
 
@@ -258,6 +313,16 @@ document 对象表示整个 HTML 文档，文档中包括 HTML 元素。按类�
 | links[]   | 返回对文档中所有 area 和 link 对象的引用。 |
 
 在实际编写 JavaScript 代码时，很少会通过 document 对象下的元素集合去获取 HTML 元素（如 document.all[i]、document.images[name]、document.all.tags[tagname]），通常的做法是通过 getElementById() 方法、getElementsByTagName() 和 getElementsByName() 方法获取 HTML 元素。
+
+### DOM树
+
+![image-20220322190813731](https://gitee.com/Dye/statics/raw/master/img/202203221908793.png)
+
+- 文档：一个页面就是一个文档，DOM 中使用 document 表示
+- 元素：页面中的所有标签都是元素，DOM 中使用 element 表示
+- 节点：网页中的所有内容都是节点（标签、属性、文本、注释等），DOM 中使用 node 表示
+
+**DOM** 把以上内容都看做是对象
 
 ### DOM 元素
 
@@ -318,6 +383,447 @@ DOM 是以树状结构组织的 HTML 文档，DOM 定义了访问和操作 HTML 
 | 元素     | 1    |
 | 属性     | 2    |
 | 文本     | 3    |
+
+#### 获取元素
+
+##### **根据** **ID** 获取
+
+> 使用 getElementById() 方法可以获取带有 ID 的元素对象。
+
+```js
+document.getElementById('id');
+```
+
+> 小技巧:使用 console.dir() 可以打印我们获取的元素对象，更好的查看对象里面的属性和方法。
+
+##### 根据标签名获取
+
+使用 getElementsByTagName() 方法可以返回带有指定标签名的对象的集合。
+
+```js
+ document.getElementsByTagName('标签名');
+```
+
+> 1.因为得到的是一个对象的集合，所以我们想要操作里面的元素就需要遍历。
+>
+> 2.得到元素对象是动态的
+>
+> 如果获取不到元素,则返回为空的伪数组(因为获取不到对象)
+
+**还可以获取某个元素(父元素)内部所有指定标签名的子元素.**
+
+```js
+element.getElementsByTagName('标签名');
+```
+
+> 父元素必须是单个对象(必须指明是哪一个元素对象). 获取的时候不包括父元素自己。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>知否知否，应是等你好久11</li>
+        <li>知否知否，应是等你好久11</li>
+        <li>知否知否，应是等你好久11</li>
+        <li>知否知否，应是等你好久11</li>
+
+    </ul>
+    <ol id="ol">
+        <li>生僻字</li>
+        <li>生僻字</li>
+        <li>生僻字</li>
+        <li>生僻字</li>
+
+    </ol>
+
+    <script>
+        // 1.返回的是 获取过来元素对象的集合 以伪数组的形式存储的
+        var lis = document.getElementsByTagName('li');
+        console.log(lis);
+        console.log(lis[0]);
+        // 2. 我们想要依次打印里面的元素对象我们可以采取遍历的方式
+        for (var i = 0; i < lis.length; i++) {
+            console.log(lis[i]);
+
+        }
+        // 3. 如果页面中只有一个li 返回的还是伪数组的形式 
+        // 4. 如果页面中没有这个元素 返回的是空的伪数组的形式
+        // 5. element.getElementsByTagName('标签名'); 父元素必须是指定的单个元素
+        // var ol = document.getElementsByTagName('ol'); // [ol]
+        // console.log(ol[0].getElementsByTagName('li'));
+        var ol = document.getElementById('ol');
+        console.log(ol.getElementsByTagName('li'));
+    </script>
+</body>
+
+</html>
+```
+
+
+
+##### **通过** **HTML5** **新增的方法获取**
+
+```js
+document.getElementsByClassName(‘类名’)；// 根据类名返回元素对象集合
+```
+
+```js
+document.querySelector('选择器');        // 根据指定选择器返回第一个元素对象
+```
+
+```js
+document.querySelectorAll('选择器');     // 根据指定选择器返回
+```
+
+> querySelector 和 querySelectorAll里面的选择器需要加符号,比如:document.querySelector('#nav'); 
+
+##### 获取特殊元素（body，html)
+
+- 获取body元素
+
+  - ```js
+    document.body//返回body元素对象
+    ```
+
+- 获取html元素
+
+  - ```js
+     // var htmlEle = document.html; NO
+    document.documentElement //返回html元素对象
+    ```
+
+    
+
+#### 事件基础
+
+> JavaScript 使我们有能力创建动态页面，而事件是可以被 JavaScript 侦测到的行为。
+>
+> 简单理解： 触发--- 响应机制。
+>
+> 网页中的每个元素都可以产生某些可以触发 JavaScript 的事件，例如，我们可以在用户点击某按钮时产生一个 事件，然后去执行某些操作。
+
+##### **事件三要素**
+
+1. 事件源 （谁）
+
+2. 事件类型 （什么事件）
+
+3. 事件处理程序 （做啥）
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">唐伯虎</button>
+    <script>
+        // 点击一个按钮，弹出对话框
+        // 1. 事件是有三部分组成  事件源  事件类型  事件处理程序   我们也称为事件三要素
+        //(1) 事件源 事件被触发的对象   谁  按钮
+        var btn = document.getElementById('btn');
+        //(2) 事件类型  如何触发 什么事件 比如鼠标点击(onclick) 还是鼠标经过 还是键盘按下
+        //(3) 事件处理程序  通过一个函数赋值的方式 完成
+        btn.onclick = function() {
+            alert('点秋香');
+        }
+    </script>
+</body>
+
+</html>
+```
+
+##### **执行事件的步骤**
+
+1. 获取事件源
+
+2. 注册事件（绑定事件）
+
+3. 添加事件处理程序（采取函数赋值形式）
+
+```js
+// 执行事件步骤
+// 点击div 控制台输出 我被选中了
+// 1. 获取事件源
+var div = document.querySelector('div');
+// 2.绑定事件 注册事件
+// div.onclick 
+// 3.添加事件处理程序 
+div.onclick = function() {
+    console.log('我被选中了');
+
+}
+```
+
+##### **常见的鼠标事件**
+
+![image-20220322201308799](https://gitee.com/Dye/statics/raw/master/img/202203222013853.png)
+
+在鼠标经过和离开，推荐使用`mouseenter`和`mouseleave`
+
+因为，over和out的方式是冒泡的，拿两个进行对比
+
+1.不论鼠标指针离开被选元素还是任何子元素，都会触发 mouseout 事件。
+
+2.只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。
+
+#### 操作元素
+
+JavaScript 的 DOM 操作可以改变网页内容、结构和样式，我们可以利用 DOM 操作元素来改变元素里面的内容 、属性等。注意以下都是属性
+
+##### 修改元素内容
+
+```js
+element.innerText
+// 从起始位置到终止位置的内容, 但它去除 html 标签， 同时空格和换行也会去掉
+```
+
+```js
+element.innerHTML
+// 起始位置到终止位置的全部内容，包括 html 标签，同时保留空格和换行
+```
+
+实例：
+
+```js
+// 当我们点击了按钮，  div里面的文字会发生变化
+// 1. 获取元素 
+var btn = document.querySelector('button');
+var div = document.querySelector('div');
+// 2.注册事件
+btn.onclick = function() {
+    // div.innerText = '2019-6-6';
+    div.innerHTML = getDate();
+}
+
+function getDate() {
+    var date = new Date();
+    // 我们写一个 2019年 5月 1日 星期三
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var dates = date.getDate();
+    var arr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    var day = date.getDay();
+    return '今天是：' + year + '年' + month + '月' + dates + '日 ' + arr[day];
+}
+// 我们元素可以不用添加事件
+var p = document.querySelector('p');
+p.innerHTML = getDate();
+```
+
+**innerText和innerHTML的区别**
+
+```js
+// innerText 和 innerHTML的区别 
+// 1. innerText 不识别html标签 非标准  去除空格和换行
+var div = document.querySelector('div');
+// div.innerText = '<strong>今天是：</strong> 2019';
+// 2. innerHTML 识别html标签 W3C标准 保留空格和换行的
+div.innerHTML = '<strong>今天是：</strong> 2019';
+// 这两个属性是可读写的  可以获取元素里面的内容
+var p = document.querySelector('p');
+console.log(p.innerText);
+console.log(p.innerHTML);
+```
+
+> 因此通常使用innerHTML代替innerText
+
+##### 修改元素属性
+
+**常用元素的属性操作**
+
+1. innerText、innerHTML 改变元素内容
+
+2. src、href
+
+3. id、alt、title
+
+实例：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="ldh">刘德华</button>
+    <button id="zxy">张学友</button> <br>
+    <img src="images/ldh.jpg" alt="" title="刘德华">
+
+    <script>
+        // 修改元素属性  src
+        // 1. 获取元素
+        var ldh = document.getElementById('ldh');
+        var zxy = document.getElementById('zxy');
+        var img = document.querySelector('img');
+        // 2. 注册事件  处理程序
+        zxy.onclick = function() {
+            img.src = 'images/zxy.jpg';
+            img.title = '张学友思密达';
+        }
+        ldh.onclick = function() {
+            img.src = 'images/ldh.jpg';
+            img.title = '刘德华';
+        }
+    </script>
+</body>
+
+</html>
+```
+
+##### 修改表单属性
+
+>  type、value、checked、selected、disabled
+
+- 获取和设置input是不能通过innerHTML的，因为它是普通盒子如div的内容
+- this指向当前函数的调用者
+
+实例：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>按钮</button>
+    <input type="text" value="输入内容">
+    <script>
+        // 1. 获取元素
+        var btn = document.querySelector('button');
+        var input = document.querySelector('input');
+        // 2. 注册事件 处理程序
+        btn.onclick = function() {
+            // input.innerHTML = '点击了';  这个是 普通盒子 比如 div 标签里面的内容
+            // 表单里面的值 文字内容是通过 value 来修改的
+            input.value = '被点击了';
+            // 如果想要某个表单被禁用 不能再点击 disabled  我们想要这个按钮 button禁用
+            // btn.disabled = true;
+            this.disabled = true;
+            // this 指向的是事件函数的调用者 btn
+        }
+    </script>
+</body>
+
+</html>
+```
+
+实例：仿京东显示隐藏密码明文：
+
+> 点击按钮将密码框切换为文本框，并可以查看密码明文。
+
+- 核心思路： 点击眼睛按钮，把密码框类型改为文本框就可以看见里面的密码
+- 一个按钮两个状态，点击一次，切换为文本框，继续点击一次切换为密码框
+- 算法：利用一个flag变量，来判断flag的值，如果是1 就切换为文本框，flag 设置为0，如果是0 就切换为密码框，flag设置为1
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            position: relative;
+            width: 400px;
+            border-bottom: 1px solid #ccc;
+            margin: 100px auto;
+        }
+        
+        .box input {
+            width: 370px;
+            height: 30px;
+            /* 取消输入框的边框和选中蓝框 */
+            border: 0;
+            outline: none;
+        }
+        
+        .box img {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 24px;
+        }
+        /* 禁用ie和edge的密码显示功能 */
+        input::-ms-reveal {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <label for="">
+            <img src="https://img1.baidu.com/it/u=912550374,2977800276&fm=26&fmt=auto" alt="" id="eye">
+        </label>
+        <input type="password" name="" id="pwd">
+    </div>
+    <script>
+        // 使用id获取更快点
+        // 1. 获取元素
+        var eye = document.getElementById('eye');
+        var pwd = document.getElementById('pwd');
+        // 2. 注册事件 处理程序
+        var flag = 0;
+        eye.onclick = function() {
+            // 点击一次之后， flag 一定要变化
+            if (flag == 0) {
+                pwd.type = 'text';
+                eye.src = 'https://img1.baidu.com/it/u=617219962,2681601423&fm=26&fmt=auto';
+                flag = 1; // 赋值操作
+            } else {
+                pwd.type = 'password';
+                eye.src = 'https://img1.baidu.com/it/u=912550374,2977800276&fm=26&fmt=auto';
+                flag = 0;
+            }
+
+        }
+    </script>
+</body>
+
+</html>
+```
+
+##### 修改样式属性
+
+
+
+
 
 ### DOM 操作
 
