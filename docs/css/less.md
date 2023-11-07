@@ -29,7 +29,7 @@ Less 安装有以下两种方式。
 
 （1）首先我们在项目下面新建一个less文件，命名为**less.less**，里面写入最简单的语法
 
-**![img](https://gitee.com/Dye/statics/raw/master/img/202202222120801.png)**
+**![img](/assets/web/202202222120801.png)**
 
 ```less
 @base: #f938ab;
@@ -83,7 +83,7 @@ div{
 
 然后再次运行，可以看到编译生成的css如下
 
-![img](https://gitee.com/Dye/statics/raw/master/img/202202222124216.png)
+![img](/assets/web/202202222124216.png)
 
 ### 2.nodejs环境
 
@@ -555,7 +555,7 @@ lessc index12.less index12.css
 
 Color 函数：Less 提供了一系列的颜色运算函数。颜色会先被转化成 HSL 色彩空间， 然后在通道级别操作，如下图：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202232044769.png)
+![图片描述](/assets/web/202202232044769.png)
 
 
 
@@ -586,7 +586,7 @@ lessc index13.less index13.css
 
 Math 函数：Less 提供了一组方便的数学函数，可以使用它们处理一些数字类型的值。如下图:
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202232045709.png)
+![图片描述](/assets/web/202202232045709.png)
 
 ### 避免编译
 

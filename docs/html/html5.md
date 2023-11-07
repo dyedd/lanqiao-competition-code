@@ -1,5 +1,3 @@
-
-
 # **HTML5**
 
 ## 介绍
@@ -180,7 +178,7 @@ body 标签定义了文档的主体和所有的内容，如文本、图片、超
 
 不使用语义标签和使用语义标签的对比如下图。
 
-![image-20200706115514212](https://gitee.com/Dye/statics/raw/master/img/202201022311150.png) ![image-20200706115313308](https://gitee.com/Dye/statics/raw/master/img/202201022311533.png)
+![image-20200706115514212](/assets/web/202201022311150.png) ![image-20200706115313308](/assets/web/202201022311533.png)
 
 语义标签的优点：
 
@@ -423,82 +421,134 @@ time 标签还有一个特殊的属性为：pubdate。该属性是布尔类型�
 
 语义化标签不能取代div，这些标签只是作为div标签的补充。
 
-## HTML多媒体
+## HTML5的新特性
 
-早期的 Web 仅支持图片和文字，无法支持多媒体。后期开始支持简单的 MIDI 和 GIF 动画。到现在可以支持各种音频和视频的播放。
+HTML5 的新增特性主要是针对于以前的不足，增加了一些新的标签、新的表单和新的表单属性等。
 
-HTML4 的多媒体播放需要各种插件来实现，例如：Window Media Play、Flash Player 等。这些插件种类繁多，各自支持的视频格式也不一致，这给网站开发和用户的使用都带来了极大的不便。
+这些新特性都有兼容性问题，基本是 IE9+ 以上版本的浏览器才支持，如果不考虑兼容性问题（例如：移动端），便可以大量使用这些新特性。
 
-HTML5 中多媒体功能的出现解决了这些问题，用户不需要安装任何插件就能播放页面中的多媒体音频和视频。HTML5 提供了两个重要的多媒体标签 audio 和 video。并提供了通用的、完整的、可脚本控制的 API。
+> 声明：新特性增加了很多，但是我们只需专注于开发常用的新特性即可
 
-### audio 标签
+### HTML5新增的语义化标签
 
-在 HTML5 中，使用 audio 标签来播放声音文件或者音频流，该标签支持 Ogg、MP3、WAV 等音频格式。
-
-#### 参数：
-
-![img](https://gitee.com/Dye/statics/raw/master/img/202201052220453.webp)
-
-语法代码如下：
+以前布局，我们基本用 div 来做。div 对于搜索引擎来说，是没有语义的。
 
 ```html
-<!--注意，这里的 samplemovice.mp4 并不存在-->
-<audio src="samplemovie.mp4" controls="controls">
-  您的浏览器不支持video标签
-</audio>
+<div class=“header”> </div>
+<div class=“nav”> </div>
+<div class=“content”> </div>
+<div class=“footer”> </div>
 ```
 
-其中 src 属性用于指定要播放的声音文件，controls 属性用于提供播放、暂停和音量控件。标签中的文本为提示信息，如果当前浏览器不支持 audio 元素，则可以显示这些信息。
+![](/assets/web/202204061610004.png)
 
-#### 属性(参数)：
+- `<header>`：头部标签
+- `<nav>`：导航标签
+- `<article>`：内容标签
+- `<section>`：定义文档的某个区域
+- `<aside>`：侧边栏标签
+- `<footer>`：尾部标签
 
-![img](https://gitee.com/Dye/statics/raw/master/img/202201052219889.webp)
+注意：
 
-另外 audio 标签还可以通过子标签 `<source>` 来进行多数据源的设置。
-
-一个 audio 可以包含多个 source ，当播放器无法识别当前格式的播放源时会调用下一个 source 播放源进行播放。
+- 这种语义化标准主要是针对搜索引擎的
+- 这些新标签页面中可以使用多次
+- 在 IE9 中，需要把这些元素转换为块级元素
+- 其实，我们移动端更喜欢使用这些标签
+- HTML5 还增加了很多其他标签，我们后面再慢慢学
 
 ```html
-    <audio controls>
-      <source src="snow.mp3" type="audio/mpeg" />
-      <source src="snow.mp3" type="audio/ogg" />
-      您的浏览器不支持audio标签
-    </audio>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5新增语义化标签</title>
+    <style>
+        header, nav {
+            height: 120px;
+            background-color: pink;
+            border-radius: 15px;
+            width: 800px;
+            margin: 15px auto;
+        }
+
+        section {
+            width: 500px;
+            height: 300px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+<header>头部标签</header>
+<nav>导航栏标签</nav>
+<section>某个区域</section>
+</body>
+</html>
 ```
 
-显示效果：
+![](/assets/web/202204061611709.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052142053.png)
+### HTML5新增的多媒体标签
 
-需要注意的是 src 属性指定的播放文件的格式一定要和 type 属性指定的类型保持一致，因为一个播放器可以播放各种类型的文件，type 会告知播放器按那种类型的文件解码，如果播放的文件和类型的编码格式不匹配，那么浏览器就会以为该文件无法播放，所以一个比较简单的(偷懒)方法就是不写 type 属性，由浏览器自行检测编码方式。
+新增的多媒体标签主要包含两个：
 
-很多网站的页面都带背景音乐，这个需求也可以通过 audio 标签来实现。示例代码如下：
+1. 音频：`<audio>`
+2. 视频：`<video>`
+
+使用它们可以很方便的在页面中嵌入音频和视频，而不再去使用 flash 和其他浏览器插件。
+
+#### 视频
+
+HTML5 在不使用插件的情况下，也可以原生的支持视频格式文件的播放。当然，支持的格式是有限的。
+
+当前 `<video>` 元素支持三种视频格式：尽量使用 mp4 格式。
+
+![](/assets/web/202204061612058.png)
+
+语法：
 
 ```html
-<audio autoplay loop>
-  <source src="snow.mp3" />
-</audio>
+<video src="文件地址" controls="controls"></video>
 ```
 
-其中的 autoplay 属性为设置自动播放。loop 属性为**循环播放**。
-
-### video 标签
-
-video不同audio，它是用来播放视频的
-
-HTML5 视频播放标签 video 的使用方式和 audio 的使用方式类似，都是可以通过 video 标签来对播放器进行设置，通过 source 标签来对播放源进行设置，当遇到无法播放的文件时也会显示标签内的内容。通过 controls 属性设置控制栏的显示，通过 autoplay 设置是否自动播放。
-
-示例代码：
+可以包含多个 source ，当播放器无法识别当前格式的播放源时会调用下一个 source 播放源进行播放。
 
 ```html
-<video controls autoplay>
-  <source src="test.mp4" />
-</video>
+<video controls="controls" width="300"> 
+    <source src="move.ogg" type="video/ogg"> 
+    <source src="move.mp4" type="video/mp4"> 
+    您的浏览器暂不支持 <video> 标签播放视频
+</ video >
 ```
 
-显示效果：
+常见属性：
 
-![pic](https://gitee.com/Dye/statics/raw/master/img/202201052149113.png)
+![](/assets/web/202204061612019.png)
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5新增视频标签</title>
+    <style>
+        video {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<video src="media/mi.mp4" autoplay="autoplay" muted="muted" loop="loop" poster="media/mi9.jpg"></video>
+</body>
+</html>
+```
+
+以上视频会自动播放。
 
 在某些时候可能会需要不使用控制栏来对视频进行控制，这时也可以使用一些内置的 JavaScript 函数和属性来控制播放器。功能如下表：
 
@@ -517,9 +567,9 @@ HTML5 视频播放标签 video 的使用方式和 audio 的使用方式类似，
 </video>
 ```
 
-### 浏览器兼容控制
+##### 浏览器兼容控制
 
-#### **video + object 标签方案**
+###### **video + object 标签方案**
 
 HTML5 支持使用 video 标签进行多媒体播放，并且按照前面章节所讲内容，当 video 标签无法支持播放时，会进入到标签内的执行提示信息操作。因此可以在外层部署 video 标签，等 video 标签无法正常执行时，使用 object 标签执行。<u>object 标签是 HTML4 可以识别并执行的标签</u>。这样就保证了在浏览器不支持 HTML5 的情况下以 HTML4 标准来进行解析。
 
@@ -537,7 +587,7 @@ HTML5 支持使用 video 标签进行多媒体播放，并且按照前面章节�
 
 swf格式是一个 flash 动画
 
-#### **JavaScript 控制方案**
+###### **JavaScript 控制方案**
 
 此方案从本质上来说还是先判断浏览器是否支持 HTML5，不支持的情况下使用 HTML4 来替换多媒体标签实现播放的操作。和第一种方案的区别在于浏览器判断和标签的使用操作是由 JavaScript 脚本来实现控制。
 
@@ -580,9 +630,9 @@ swf格式是一个 flash 动画
 </body>
 ```
 
-![pic](https://gitee.com/Dye/statics/raw/master/img/202201052155353.png)
+![pic](/assets/web/202201052155353.png)
 
-![pic](https://gitee.com/Dye/statics/raw/master/img/202201052155235.png)
+![pic](/assets/web/202201052155235.png)
 
 
 
@@ -607,7 +657,62 @@ swf格式是一个 flash 动画
 1）innerHTML的值是 `<span style="color:red">test1</span> test2 `
 2）outerHTML的值是` <div id="test"><span style="color:red">test1</span> test2</div>`
 
-## HTML新表单元素和属性
+#### 音频
+
+HTML5 在不使用插件的情况下，也可以原生的支持音频格式文件的播放。当然，支持的格式是有限的。
+
+当前 `<audio>` 元素支持三种音频格式：尽量使用 mp3 格式。
+
+![](/assets/web/202204061614990.png)
+
+语法：
+
+```html
+<audio src="文件地址" controls="controls"></audio>
+```
+
+```html
+<audio controls="controls">
+	<source src="happy.mp3" type="audio/mpeg">
+	<source src="happy.ogg" type="audio/ogg">
+	您的浏览器暂不支持 <audio> 标签。
+</audio>
+```
+
+常见属性：
+
+![image-20220406161419158](/assets/web/202204061614324.png)
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5新增音频标签</title>
+</head>
+<body>
+<audio src="media/music.mp3" autoplay="autoplay" controls="controls"></audio>
+</body>
+</html>
+```
+
+![](/assets/web/202204061614266.png)
+
+#### 多媒体标签总结
+
+- 音频标签和视频标签使用方式基本一致
+- 浏览器支持情况不同
+- 谷歌浏览器把音频和视频自动播放禁止了
+- 我们可以给视频标签添加 muted 属性来静音播放视频，音频不可以（可以通过 JavaScript 解决）
+- 视频标签是重点，我们经常设置自动播放，不使用 controls 控件，循环和设置大小属性
+
+
+
+### HTML5新增的input类型
+
+
 
 在 HTML5 之前，表单支持的 input 输入类型有十个，如下表所示：
 
@@ -637,7 +742,7 @@ swf格式是一个 flash 动画
 
 下面将逐一介绍这些新增的输入类型。
 
-### email
+#### email
 
 email 类型是 input 标签中专门用来输入电子邮件的文本输入框，在提交表单的时候会对文本框中的内容进行自动校验，如果该文本框中的内容不是一个 email 格式的字符串，则不允许表单被提交。早期的的版本中采用 “text 文本域 + JavaScript” 的方式来实现此功能。
 
@@ -661,13 +766,13 @@ email 类型是 input 标签中专门用来输入电子邮件的文本输入框�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052223034.png)
+![图片描述](/assets/web/202201052223034.png)
 
 HTML5 的 email 类型在浏览器的表现形式上同普通的 text 类型没有区别。但是在手机浏览器中这两种类型额 input 元素是有区别的。在手机中 text 元素会用正常的手机输入键盘来显示输入信息，但当该元素是 email 类型时，手机的输入键盘会通过改变输入键盘来配合该输入框。这种改变无疑提供了更好的用户体验。
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201052223113.png" alt="image-20200713101517893" style="zoom: 25%;" />
+<img src="/assets/web/202201052223113.png" alt="image-20200713101517893" style="zoom: 25%;" />
 
-### url
+#### url
 
 url 类型是 input 标签中专门用来输入 url 地址的文本输入框，当表单提交时，如果输入的文本内容不是 url 格式，则不允许提交。
 
@@ -691,11 +796,11 @@ url 类型是 input 标签中专门用来输入 url 地址的文本输入框，�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052223297.png)
+![图片描述](/assets/web/202201052223297.png)
 
 url 类型同样在手机中会有特殊的键盘配合输入。
 
-### number
+#### number
 
 number 类型是 input 标签专门用于输入数值的文本框，再使用该类型的时候，input 标签还提供属性对所输入的数字进行限制。包括允许输入的最大值和最小值、合法的数字间隔和默认值。如果输入的数字不在规定的范围内，同样会提示错误信息。另外该类型的 input 标签只允许输入数字，其他字符无法输入。
 
@@ -719,7 +824,7 @@ number 类型是 input 标签专门用于输入数值的文本框，再使用该
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052225432.png)
+![图片描述](/assets/web/202201052225432.png)
 
 number 类型可配置属性。
 
@@ -732,9 +837,9 @@ number 类型可配置属性。
 
 number 类型同样在手机中会有特殊的键盘配合输入。效果如下：
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201052225559.png" alt="image-20200713101626810" style="zoom:25%;" />
+<img src="/assets/web/202201052225559.png" alt="image-20200713101626810" style="zoom:25%;" />
 
-### range
+#### range
 
 range 类型是 input 元素提供输入在指定范围内数字值的文本框，在页面以滑动条的形式显示。使用 range 类型的标签时，必须指定最大值、最小值。否则该表单元素只能显示和操作，但无法正常使用。
 
@@ -758,11 +863,11 @@ range 类型是 input 元素提供输入在指定范围内数字值的文本框�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052245593.png)
+![图片描述](/assets/web/202201052245593.png)
 
 rang 类型的属性和 number 类型的属性是一致的，功能也是类似的，区别在于外观显示不同。另外，支持 range 类型的浏览器会将其显示成滑块形式，不支持的浏览器会将其显示成 text 形式的纯文本输入框。
 
-### Date pickers
+#### Date pickers
 
 日期是网页中经常用到的一种输入类型。日期类型的输入数据若格式不对，在后期的程序开发过程中就会遇到很大的麻烦。为了规范输入日期的格式，同时也为了方便用户操作，在 HTML5 之前的版本开发过程中通常使用第三方的日期控件来实现日期的选择输入功能，这样操作既方便了用户的输入也可以对日期格式进行有效的控制。
 
@@ -799,13 +904,13 @@ rang 类型的属性和 number 类型的属性是一致的，功能也是类似�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052248598.png)
+![图片描述](/assets/web/202201052248598.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052248505.png)
+![图片描述](/assets/web/202201052248505.png)
 
 这里需要注意 datetime 和 datetime-local 选择项虽然是 HTML5 标准中定义的日期类型选择项，但是在很多的浏览器中并不支持这个插件。例如最新的 chrome 支持 datetime-local 但是不支持 datetime。所以使用的时候还是要注意选择。
 
-### search
+#### search
 
 search 类型的 input 标签提供用于输入搜索关键字的的文本框，从外观看 search 和 text 是一样的，功能也是相近的可以输入任意的字符串，实际操作过程可以看到当文本框中存在文字时，**文本框的右侧会出现一个“×”按钮，单击此按钮可以清空文本框中的内容，这是 search 和 text 最大的区别。**
 
@@ -829,9 +934,9 @@ search 类型的 input 标签提供用于输入搜索关键字的的文本框，
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052248073.png)
+![图片描述](/assets/web/202201052248073.png)
 
-### tel
+#### tel
 
 tel 类型是 input 标签专门用来输入电话号码的文本框，它并不仅局限输入数字，还可以输入一些其他的字的字符例如：- + （）等。
 
@@ -855,11 +960,11 @@ tel 类型是 input 标签专门用来输入电话号码的文本框，它并不
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052250086.png)
+![图片描述](/assets/web/202201052250086.png)
 
 在浏览器中效果并不明显，但是在手机浏览器输入数据时，手机会默认使用数字键盘来进行输入操作。
 
-### color
+#### color
 
 color 类型是 input 标签提供的专门用于设置颜色的文本框。通过单击文本框可以打开一个调色板，用户可以在面板中选择需要的颜色。不同的操作系统打开的实测面板也不相同。
 
@@ -883,9 +988,100 @@ color 类型是 input 标签提供的专门用于设置颜色的文本框。通�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052251763.png)
+![图片描述](/assets/web/202201052251763.png)
 
-### 新的 input 属性
+### HTML5新增的表单属性
+
+![](/assets/web/202204061617769.png)
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5新增表单属性</title>
+    <style>
+        input::placeholder {
+            color: hotpink;
+        }
+    </style>
+</head>
+<body>
+<form action="">
+    <input type="search" name="sear" id="one" required="required" placeholder="pink老师" autofocus="autofocus"
+           autocomplete="off">
+    <!--多文件上传-->
+    <input type="file" name="" id="two" multiple="multiple">
+    <input type="submit" value="提交">
+</form>
+
+</body>
+</html>
+```
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5新增表单属性</title>
+    <style>
+        input::placeholder {
+            color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <input type="search" name="sear" id="one" required="required" placeholder="pink老师" autofocus="autofocus"
+            autocomplete="on">
+        <input type="submit" value="提交">
+    </form>
+
+</body>
+
+</html>
+```
+
+![](/assets/web/202204070948478.gif)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5新增表单属性</title>
+    <style>
+        input::placeholder {
+            color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <input type="search" name="sear" id="one" required="required" placeholder="pink老师" autofocus="autofocus"
+            autofocus="autofocus">
+        <input type="submit" value="提交">
+    </form>
+
+</body>
+
+</html>
+```
+
+自动聚焦：
+
+![b903916cbc5d4dfeb5f21741362564ba](/assets/web/202204070949349.gif)
 
 #### autocomplete 属性
 
@@ -913,7 +1109,7 @@ color 类型是 input 标签提供的专门用于设置颜色的文本框。通�
 
 显示效果：
 
-![img](https://gitee.com/Dye/statics/raw/master/img/202201052254873.png)
+![img](/assets/web/202201052254873.png)
 
 通过操作可以发现，用户名和密码都是可以提示的，email 则不能。若是浏览器关闭了自动提示功能，此功能则无法实现。请设置浏览器的自动提示功能再实现此代码。
 
@@ -943,7 +1139,7 @@ autocomplete 属性也可以通过 HTML5 提供的 datalist 标签实现预设�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052254731.png)
+![图片描述](/assets/web/202201052254731.png)
 
 > 注意：要将 input 标签和 datalist 标签关联在一起，需要 input 标签的 list 属性和 datalist 的 id 属性相同。
 
@@ -976,7 +1172,7 @@ autocomplete 属性也可以通过 HTML5 提供的 datalist 标签实现预设�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201052255872.png)
+![图片描述](/assets/web/202201052255872.png)
 
 当然有部分的浏览器不支持 autofocus 属性所以无法达到预期的效果，这时也可以使用一段 JavaScript 脚本来解决这个问题，首先判断一下浏览器是否支持该属性，不支持则通过 JavaScript 控制来获得。代码如下：
 
@@ -1034,7 +1230,7 @@ form 属性的属性值为 from 标签元素的 id。
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201082225150.png)
+![图片描述](/assets/web/202201082225150.png)
 
 通过 URL 地址可以看到表单可以正常工作。“key=css” 会被提交到服务器。
 
@@ -1072,7 +1268,7 @@ HTML5 新增了几个表单重写属性，用于重写表单的某些属性。�
 
 效果如下：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201082226032.png)
+![图片描述](/assets/web/202201082226032.png)
 
 #### height 和 width 属性
 
@@ -1106,7 +1302,7 @@ HTML5 中添加了一个新标签 datalist，该标签可以实现提供数据�
 
 效果如下所示：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201082235915.png)
+![图片描述](/assets/web/202201082235915.png)
 
 > 注意：list 属性的值为某个 datalist 标签的 id 属性。
 
@@ -1134,7 +1330,7 @@ HTML5 新增了 min, max 和 step 属性用于为数字或日期输入类型的 
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201082236435.png)
+![图片描述](/assets/web/202201082236435.png)
 
 #### **multiple 属性**
 
@@ -1159,7 +1355,7 @@ HTML5 提供了 multiple 属性可以允许一次选择多个文件并上传，�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111605014.png)
+![图片描述](/assets/web/202201111605014.png)
 
 #### pattern (regexp) 属性
 
@@ -1187,7 +1383,7 @@ HTML5 新增 pattern 属性用于对用户输入信息进行正则表达式校�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111606318.png)
+![图片描述](/assets/web/202201111606318.png)
 
 patten 属性的值为一个正则表达式
 
@@ -1221,7 +1417,7 @@ HTML5 新增 placeholder 属性用于为文本框提供提示说明功能，提�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111607539.png)
+![图片描述](/assets/web/202201111607539.png)
 
 #### required 属性
 
@@ -1252,7 +1448,7 @@ HTML5 新增的 required 属性用于限定文本框内容不能为空。当文�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111607717.png)
+![图片描述](/assets/web/202201111607717.png)
 
 ### 新的 form 元素
 
@@ -1289,7 +1485,7 @@ datalist 标签主要用于为输入框提供一个可选择的数据列表。**
 
 效果如下：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111608262.png)
+![图片描述](/assets/web/202201111608262.png)
 
 > 注意：option 标签的 value 属性为提交值，标签中的为显示值。若不设置 value 属性，提交值即为显示值。
 
@@ -1325,7 +1521,7 @@ HTML5 新增的 output 元素用于在浏览器中显示计算结果或者脚本
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111609465.png)
+![图片描述](/assets/web/202201111609465.png)
 
 还有更牛逼的代码：
 
@@ -1682,7 +1878,7 @@ IPv4地址：((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201111742066.png)
+![图片描述](/assets/web/202201111742066.png)
 
 checkValidity方法表示执行原生的表单验证，如果验证通过返回true。如果验证失败，则会触发一个invalid事件。使用该方法以后，会设置validity对象的值。
 
@@ -1981,7 +2177,7 @@ MathML 是数学标记语言，是一种基于 XML（标准通用标记语言的
 
 测试结果：
 
-![image-20220113195640152](https://gitee.com/Dye/statics/raw/master/img/202201131956246.png)
+![image-20220113195640152](/assets/web/202201131956246.png)
 
 ```html
 <!DOCTYPE html>
@@ -2059,7 +2255,7 @@ MathML 是数学标记语言，是一种基于 XML（标准通用标记语言的
 
 测试结果：
 
-![image-20220113200127733](https://gitee.com/Dye/statics/raw/master/img/202201132001785.png)
+![image-20220113200127733](/assets/web/202201132001785.png)
 
 ## HTML5 Web 存储
 
@@ -2122,7 +2318,7 @@ if (typeof Storage !== "undefined") {
 
 测试结果：
 
-![image-20220113205504508](https://gitee.com/Dye/statics/raw/master/img/202201132055586.png)
+![image-20220113205504508](/assets/web/202201132055586.png)
 
 除了上面的直接`变量.key=value`
 

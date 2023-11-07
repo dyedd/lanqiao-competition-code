@@ -101,7 +101,7 @@ node test5.js
 
 可以看到，以下结果：
 
-![image-20220223215718242](https://gitee.com/Dye/statics/raw/master/img/202202232157285.png)
+![image-20220223215718242](/assets/web/202202232157285.png)
 
 #### **阻塞**
 
@@ -259,7 +259,7 @@ node index.js
 
 会看到，
 
-![image-20220223222730755](https://gitee.com/Dye/statics/raw/master/img/202202232227794.png)
+![image-20220223222730755](/assets/web/202202232227794.png)
 
 ##### **流程控制库**
 
@@ -307,7 +307,7 @@ myAsyncFn(option1, option2);
 node index3.js
 ```
 
-![image-20220223222829420](https://gitee.com/Dye/statics/raw/master/img/202202232228481.png)
+![image-20220223222829420](/assets/web/202202232228481.png)
 
 ### NodeJS Buffer 缓存区
 
@@ -825,7 +825,7 @@ http
 
 ServerRequest 的属性，如下图：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202242248240.png)
+![图片描述](/assets/web/202202242248240.png)
 
 `http.ServerResponse` 返回客户端信息：`http.ServerResponse` 决定了用户最终能到的结果，它是由 `http.Server` 的 `request` 事件发送的，作为第二个参数传递。主要有三个函数：
 
@@ -853,7 +853,7 @@ http 模块提供了两个函数 `http.request` 和 `http.get` ，功能是作�
 
 options 常用的参数，如下图：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202242254118.png)
+![图片描述](/assets/web/202202242254118.png)
 
 示例：新建一个名为 `demo14.js` 的文件。在其中输入以下代码：
 
@@ -944,7 +944,7 @@ console.log(myPath);//home/path1.path2/a/b\c
 
 parse：`path.parse` 方法返回一个对象，对象的属性表示 path 的元素。如下图：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202262206608.png)
+![图片描述](/assets/web/202202262206608.png)
 
 示例：新建一个名为 `demo19.js` 的文件。在其中输入以下代码：
 
@@ -958,7 +958,7 @@ console.log(obj);
 
 效果如图：
 
-![image-20220226220802693](https://gitee.com/Dye/statics/raw/master/img/202202262208761.png)
+![image-20220226220802693](/assets/web/202202262208761.png)
 
 #### url 模块
 
@@ -1164,7 +1164,7 @@ npm search <Module Name>
 
 路由是指客户端请求地址与服务器程序代码的对应关系，要针对不同的 URL 有不同的处理方式，简单来说，就是请求什么响应什么。例如，我们访问 `http://localhost:3000/index` 这个地址时访问的是首页，访问 `http://localhost:3000/login` 这个地址时访问的是登录页界面。
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202262247883.png)
+![图片描述](/assets/web/202202262247883.png)
 
 路由过程会在路由模块中**结束**，并且路由模块并不是真正针对请求**采取行动**的模块，否则当我们的应用程序变得更为复杂的时候就将无法得到很好的扩展。
 
@@ -1262,7 +1262,7 @@ console.log("byvoid%diovyb", 1991);
 console.trace();
 ```
 
-![image-20220227164717373](https://gitee.com/Dye/statics/raw/master/img/202202271647474.png)
+![image-20220227164717373](/assets/web/202202271647474.png)
 
 **`console.info([data][, ...])`**
 该命令的作用是返回信息性消息，这个命令与console.log差别并不大，除了在chrome中只会输出文字外，其余的会显示一个蓝色的惊叹号。
@@ -1288,7 +1288,7 @@ console.log("byvoid%diovyb", 1991);
 console.timeEnd("获取数据");
 ```
 
-![image-20220227182357970](https://gitee.com/Dye/statics/raw/master/img/202202271823052.png)
+![image-20220227182357970](/assets/web/202202271823052.png)
 
 **`console.time()`和`console.timeEnd()`获取执行区间**
 
@@ -1442,7 +1442,7 @@ console.log(util.inspect(c));
 console.log(util.inspect(s));
 ```
 
-![image-20220301140129550](https://gitee.com/Dye/statics/raw/master/img/202203011401656.png)
+![image-20220301140129550](/assets/web/202203011401656.png)
 
 ### util.inspect
 
@@ -1471,7 +1471,7 @@ console.log(util.inspect(obj));
 console.log(util.inspect(obj, true));
 ```
 
-![image-20220301140401293](https://gitee.com/Dye/statics/raw/master/img/202203011404382.png)
+![image-20220301140401293](/assets/web/202203011404382.png)
 
 ### util.isArray(object)
 
@@ -1549,7 +1549,7 @@ Node.js 提供一组类似 UNIX（POSIX）标准的文件操作 API。
 
 f: file 文件，s: system 系统，文件操作系统。
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202203011415593.png)
+![图片描述](/assets/web/202203011415593.png)
 
 Node 导入文件系统模块（fs）语法如下所示：
 
@@ -1845,7 +1845,7 @@ for (var i = 0; i < 3; i++) {
 }
 ```
 
-![image-20220301165027961](https://gitee.com/Dye/statics/raw/master/img/202203011650069.png)
+![image-20220301165027961](/assets/web/202203011650069.png)
 
 ### spawn() 方法
 

@@ -253,13 +253,13 @@ npm install multer
 
 文件对象: multer 解析完上传文件后，会被保存为一个包含以下字段的对象，如下图：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202203201525173.png)
+![图片描述](/assets/web/202203201525173.png)
 
 multer(opts) 创建对象：Multer 接受一个 options 对象，其中最基本的是 dest 属性，告诉 Multer 将上传文件保存在哪。如果省略 options 对象，这些文件将保存在内存中，永远不会写入磁盘。为了避免命名冲突，Multer 会修改上传的文件名。
 
 Multer 的选项对象中可以包含以下值,如下图：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202203201526207.png)
+![图片描述](/assets/web/202203201526207.png)
 
 通常，只需要设置 dest 属性，如下示例：
 

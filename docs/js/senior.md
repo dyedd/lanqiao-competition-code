@@ -416,7 +416,7 @@ var reg = new RegExp(document.getElementById("div"));
 
 实验效果如下所示：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202062151906.gif)
+![图片描述](/assets/web/202202062151906.gif)
 
 # HTML5 API
 
@@ -545,7 +545,7 @@ ondragover 事件规定在何处放置被拖动的数据。
 
 效果如下所示：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202062200269.gif)
+![图片描述](/assets/web/202202062200269.gif)
 
 ## 定位事件
 
@@ -666,7 +666,7 @@ canvas 元素使用 JavaScript 在网页上绘制图像。它拥有多种绘制�
 
 效果如下所示：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202062204971.png)
+![图片描述](/assets/web/202202062204971.png)
 
 ## HTML 本地存储
 
@@ -738,7 +738,7 @@ HTML5 提供了两种方式在客户端存储数据：
 
 显示效果如下所示：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202202062205974.gif)
+![图片描述](/assets/web/202202062205974.gif)
 
 ## WebSocket
 

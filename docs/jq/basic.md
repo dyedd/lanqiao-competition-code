@@ -24,6 +24,12 @@ jQuery入口函数与js入口函数的对比：
 
 1.	JavaScript的入口函数要等到页面中所有资源（包括图片、文件）加载完成才开始执行。
 2.	jQuery的入口函数只会等待文档树加载完成就开始执行，并不会等待图片、文件的加载。
+3.	等着 DOM 结构渲染完毕即可执行内部代码，不必等到所有外部资源加载完成，jQuery 帮我们完成了封装。
+4.	相当于原生 js 中的 `DOMContentLoaded`。
+5.	不同于原生 js 中的 `load` 事件是等页面文档、外部的js文件、css文件、图片加载完毕才执行内部代码。
+6.	更推荐使用第一种方式。
+
+
 
 ## jq对象和dom对象(重要)
 
@@ -67,6 +73,7 @@ $li.get(0)
 | 名称       | 用法               | 描述                                 |
 | ---------- | ------------------ | :----------------------------------- |
 | ID选择器   | $(“#id”);          | 获取指定ID的元素                     |
+| 全选选择器 | $('*')             | 匹配所有元素                         |
 | 类选择器   | $(“.class”);       | 获取同一类class的元素                |
 | 标签选择器 | $(“div”);          | 获取同一类标签的所有元素             |
 | 并集选择器 | $(“div,p,li”);     | 使用逗号分隔，只要符合条件之一就可。 |
@@ -87,6 +94,8 @@ $li.get(0)
 
 | 名称         | 用法                               | 描述                                                        |
 | ------------ | ---------------------------------- | :---------------------------------------------------------- |
+| :first       | $('li:first')                      | 获取第一个 li`元素                                          |
+| :last        | $('li:last')                       | 获取最后一个 li 元素                                        |
 | :eq（index） | $(“li:eq(2)”).css(“color”, ”red”); | 获取到的li元素中，选择索引号为2的元素，索引号index从0开始。 |
 | :odd         | $(“li:odd”).css(“color”, ”red”);   | 获取到的li元素中，选择索引号为奇数的元素                    |
 | :even        | $(“li:even”).css(“color”, ”red”);  | 获取到的li元素中，选择索引号为偶数的元素                    |
@@ -107,10 +116,13 @@ $li.get(0)
 | next()             | $(“li”).next()                                               | 找下一个兄弟                   |
 | prev()             | $(“li”).prev()                                               | 找上一个兄弟                   |
 | prevAll()/nextAll() | $("li").prevAll() | 找前面/后面所有兄弟 |
+| `hasClass(class)` | `$('div').hasClass('protected')` | 检查当前的元素是否含有某个特定的类，如 果有，则返回 `true` |
 
 > 总结：筛选选择器的功能与过滤选择器有点类似，但是用法不一样，筛选选择器主要是方法。
 
 使用`$().index()`获取当前索引
+
+重点记住：`parent()`、`children()`、`find()`、`siblings()`、`eq()`
 
 ## 元素设置
 
@@ -146,7 +158,7 @@ $li.get(0)
     $('li').hasClass('now');
 ```
 
-
+- 作用等同于以前的 `classList`，可以操作类样式， 注意 **操作类里面的参数不要加点**。
 
 ### 属性设置
 
@@ -229,12 +241,42 @@ $('li').fadeIn();
 $('li').fadeOut();
 /*3.切换淡入淡出*/
 $('li').fadeToggle();
+
 // 淡入到哪里
+//fadeTo([[speed],opacity,[easing],[fn]])
 //speed填时间或者slow，opacity填透明度
-$('li').fadeTo('speed','opacity');
+$('li').fadeTo('speed','opacity',fn);
 ```
 
+案例：图片高亮突出显示
 
+```js
+$('.wrap li').hover(function () {
+    $(this).siblings().stop().fadeTo(400, .5);
+}, function () {
+    $(this).siblings().stop().fadeTo(400, 1);
+});
+```
+
+### 事件切换
+
+```js
+hover([over,] out)
+```
+
+参数说明：
+
+- `over`：鼠标移到元素上要触发的函数（相当于 `mouseenter`）
+- `out`：鼠标移出元素要触发的函数（相当于 `mouseleave`）
+- **如果只写一个函数，则鼠标经过和离开都会触发它**
+
+举例：
+
+```js
+$('.nav>li').hover(function () {
+    $(this).children('ul').stop().slideToggle('fast');
+})
+```
 
 ### 自定义动画
 
@@ -260,7 +302,7 @@ $('#box3').animate({left:800},5000,'swing',function () {
 
 ### 动画队列  
 
-![](https://gitee.com/Dye/statics/raw/master/img/202203172238202.png)
+![](/assets/web/202203172238202.png)
 
 ```javascript
 /*
@@ -346,6 +388,9 @@ $('#box').empty();
 /*2.删除某个元素，如果是父元素，也都删了*/
 /* 自杀 */
 $('#box').remove();
+/*2.html方法*/
+element.html('')
+// empty() 和 html('') 作用等价，都可以删除元素里面的内容，只不过 html 还可以设置内容。
 ```
 
 
@@ -383,7 +428,20 @@ $('#box').remove();
 
 区别：html方法会识别html标签，text方法会那内容直接当成字符串，并不会识别html标签。
 
-### width方法与height方法
+### 尺寸
+
+| 语法                                     | 用法                                                      |
+| ---------------------------------------- | --------------------------------------------------------- |
+| `width()` / `height()`                   | 取得匹配元素宽度和高度值只算 `width` / `height`           |
+| `innerWidth()` / `innerHieght()`         | 取得匹配元素宽度和高度值包含 `padding`                    |
+| `outerWidth()` / `outerHeight()`         | 取得匹配元素宽度和高度值包含 `padding`、`border`          |
+| `outerWidth(true)` / `outerHeight(true)` | 取得匹配元素宽度和高度值包含 `padding`、`borde`、`margin` |
+
+- 以上参数为空，则是获取相应值，返回的是数字型。
+- 如果参数为数字，则是修改相应值。
+- 参数可以不必写单位。
+
+#### width方法与height方法
 
 > 设置或者获取高度
 
@@ -399,7 +457,7 @@ $(window).height(200);
 $(window).height();
 ```
 
-### innerWidth方法与innerHeight方法
+#### innerWidth方法与innerHeight方法
 
 ```javascript
 //包括内边距
@@ -409,7 +467,7 @@ $('img').innnerWidth();
 $('img').innerHeight();
 ```
 
-### outerWidth方法与outerHeight方法
+#### outerWidth方法与outerHeight方法
 
 ```js
 //包括内边距和边框
@@ -420,7 +478,13 @@ $('img').outerWidth(true);
 $('img').outerHeight(true);
 ```
 
-### scrollTop与scrollLeft
+### 位置
+
+位置主要有三个： `offset()`、`position()`、`scrollTop()` / `scrollLeft()`
+
+
+
+#### scrollTop与scrollLeft
 
 > 设置或者获取垂直滚动条的位置
 
@@ -434,7 +498,7 @@ $(window).scrollLeft();
 
 滚动事件：`scroll`
 
-### offset方法与position方法
+#### offset方法与position方法
 
 > offset方法获取元素距离document的位置，position方法获取的是元素距离有定位的父元素的位置。
 
@@ -444,6 +508,16 @@ $(window).scrollLeft();
     //获取相对于其最近的有定位的父元素的位置。
     $(selector).position();
 ```
+
+`offset()` 方法设置或返回被选元素相对于文档的偏移坐标，跟父级没有关系。 该方法有2个属性 `left`、`top`。`offset().top` 用于获取距离文档顶部的距离，`offset().left` 用于获取距离文档左侧的距离。 可以设置元素的偏移：
+
+```js
+offset({ top: 10, left: 30 })
+```
+
+- `position()` 方法用于返回被选元素相对于带有定位的父级偏移坐标，如果父级都没有定位，则以文档为准。
+- 该方法有2个属性 `left`、`top`。`position().top` 用于获取距离定位父级顶部的距离，`position().left` 用于获取距离定位父级左侧的距离。
+- **该方法只能获取**。
 
 ## jQuery事件机制
 
@@ -569,6 +643,7 @@ on注册事件的语法：
 
 ```javascript
     $(selector).click(); //触发 click事件
+	// 自动触发事件 trigger()
     $(selector).trigger("click");
 	如果通过on注册了一个自定义事件，如test
     那么就用trigger("test")触发
@@ -593,6 +668,34 @@ jQuery事件对象其实就是js事件对象的一个封装，处理了兼容性
 
 ## jQuery补充知识点
 
+### 隐式迭代（重要）
+
+遍历内部 DOM 元素（伪数组形式存储）的过程就叫做 **隐式迭代**。 简单理解：给匹配到的所有元素进行循环遍历，执行相应的方法，而不用我们再进行循环，简化我们的操作，方便我们调用。
+
+```html
+<div>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</div>
+<script>
+    $('div div').css('color', 'red');
+</script>
+```
+
+### jQuery 里面的排他思想
+
+想要多选一的效果，排他思想：当前元素（`$(this)`）设置样式，其余的兄弟元素（`$(this).siblings()`）清除样式。
+
+```js
+$('button').mouseover(function () {
+    // 设置自己的属性
+    $(this).css('background-color', 'pink')
+    // 消灭其他元素的属性
+    $(this).siblings().css('background-color', '');
+})
+```
+
 ### 阻止a标签的跳转
 
 - `rerturn false`
@@ -601,27 +704,89 @@ jQuery事件对象其实就是js事件对象的一个封装，处理了兼容性
 
 ### 链式编程
 
+链式编程是为了节省代码量，看起来更优雅。
+
+```js
+$('button').mouseover(function () {
+    // 先设置自己的属性，然后消灭其他兄弟的属性
+    $(this).css('background-color', 'pink').siblings().css('background-color', '');
+})
+```
+
 > 通常情况下，只有设置操作才能把链式编程延续下去。因为获取操作的时候，会返回获取到的相应的值，无法返回 jQuery对象。
 
 ```javascript
     end(); // 筛选选择器会改变jQuery对象的DOM对象，想要回复到上一次的状态，并且返回匹配元素之前的状态。
 ```
 
+实例：tab栏切换
+
+```js
+// 获取所点击的 tab 的 index，使用 index() 方法
+let index = $(this).index();
+// 使用 eq() 方法设置相应的模块展示，而隐藏其他兄弟节点
+$('#content div').eq(index).show().siblings().hide();
+```
+
+
+
 
 
 ### each方法
 
-> jQuery的隐式迭代会对所有的DOM对象设置相同的值，但是如果我们需要给每一个对象设置不同的值的时候，就需要自己进行迭代了。
+jQuery 隐式迭代是对同一类元素做了同样的操作。 如果想要 **给同一类元素做不同操作，就需要用到遍历**。
 
-作用：遍历jQuery对象集合，为每个匹配的元素执行一个函数
+\1. `$('div').each()`
 
-```javascript
-    // 参数一表示当前元素在所有匹配元素中的索引号
-    // 参数二表示当前元素（DOM对象）
-    $(selector).each(function(index,element){});
+```js
+$("div").each(function (index, domElem) {
+    $(domElem);
+});
 ```
 
+- `each()` 方法遍历匹配的每一个元素。主要用 DOM 处理。 `each` 每一个。
+- 里面的回调函数有 2 个参数：index 是每个元素的索引号；`demElem` 是每个DOM元素对象，不是jquery对象
+- 所以要想使用 jquery 方法，需要给这个 `dom` 元素转换为 jquery 对象：`$(domElem)`
 
+2. `$.each()`
+
+```js
+$.each(object，function (index, element) { })
+```
+
+- `$.each()` 方法可用于遍历任何对象。主要用于数据处理，比如数组，对象
+- 里面的函数有 2 个参数：`index` 是每个元素的索引号； `element` 遍历内容。
+
+其中，`object` 对象可以是 DOM 对象，数组，一般对象等。
+
+（1）当 `object` 为 DOM 对象：
+
+```js
+$.each($('li'), function (i, domElem) {
+    $(domElem); // 转换为 jQuery 对象
+})
+```
+
+（2）当 `object` 为数组：
+
+```js
+$.each(arr, function(inbdex, value) {
+    // arr 为原数组
+    // index 为当前索引
+    // value 为当前数组值
+})
+```
+
+（3）当 `object` 为一般对象：
+
+```js
+$.each(obj, function(key, value) {
+    console.log(key, value);
+    // obj: 对象
+    // key: 对象的键
+    // value: 对象的值
+})
+```
 
 ### 多库共存
 
@@ -630,6 +795,26 @@ jQuery事件对象其实就是js事件对象的一个封装，处理了兼容性
 ```javascript
     var c = $.noConflict();//释放$的控制权,并且把$的能力给了c
 ```
+
+### jQuery 拷贝对象
+
+如果想要把某个对象拷贝（合并）给另外一个对象使用，此时可以使用 `$.extend()` 方法
+
+语法：
+
+```js
+$.extend([deep], target, object1, [objectN])Copy to clipboardErrorCopied
+```
+
+- `deep`: 如果设为 `true` 为深拷贝，不写则为浅拷贝
+- `target`：要拷贝的目标对象
+- `object1`：待拷贝到第一个对象的对象。
+- `objectN`：待拷贝到第 `N` 个对象的对象。
+- 浅拷贝是把被拷贝的 **对象复杂数据类型** 中的地址拷贝给目标对象，修改目标对象会影响被拷贝对象。
+  对于简单数据类型属性，则不会拷贝地址。
+- 深拷贝，前面加 `true`， 完全克隆（拷贝的对象,而不是地址），修改目标对象不会影响被拷贝对象。
+
+
 
 ## 插件
 

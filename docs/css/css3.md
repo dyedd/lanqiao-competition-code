@@ -20,18 +20,97 @@ CSS 厂商前缀是浏览器公司在新的或实验性的 CSS3 功能成为正�
 
 虽然目前较新版本的浏览器都是不需要前缀的，但为了更好的向前兼容前缀还是少不了的。
 
+### 提倡的写法
+
+```css
+-moz-border-radius: 10px; 
+-webkit-border-radius: 10px; 
+-o-border-radius: 10px; 
+border-radius: 10px;
+```
+
 ## CSS3选择器
 
 在前面，也指出了以下的选择器，在这里再提出一下，知道他们是css3才出来的。
 
-CSS3 中新增了伪类选择器和伪元素选择器，他们之间的定义和区别如下：
+CSS3 给我们新增了选择器，可以更加便捷，更加自由的选择目标元素。
 
-| 名称   | 描述                                                         | 示例           |
-| ------ | ------------------------------------------------------------ | -------------- |
-| 类     | 用户定义的真实存在的类样式                                   | .div {}        |
-| 伪类   | 非用户定义的，用于添加特殊效果的，作用于标记状态的类样式     | a:hover {}     |
-| 元素   | 用户定义真实存在的元素（标签）                               | div {}         |
-| 伪元素 | HTML 中不存在的虚拟的元素容器，该容器不包括 DOM ,但可以包括内容。 | div::before {} |
+1. 属性选择器
+2. 结构伪类选择器
+3. 伪元素选择器
+
+### 属性选择器
+
+属性选择器可以根据元素特定属性来选择元素。这样就可以不用借助于类或者 id 选择器。
+
+| 选择符          | 简介                                        |
+| --------------- | ------------------------------------------- |
+| `E[att]`        | 选择具有 att 属性的 E 元素                  |
+| `E[att="val"]`  | 选择具有 att 属性且属性值等于 val 的 E 元素 |
+| `E[att^="val"]` | 匹配具有 att 属性且值以 val 开头的 E 元素   |
+| `E[arr$="val"]` | 匹配具有 att 属性且值以 val 结尾的 E 元素   |
+| `E[att*="val"]` | 匹配具有 att 属性且值中含有 val 的 E 元素   |
+
+注意：类选择器、属性选择器、伪类选择器，权重为 10。
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3新增属性选择器</title>
+    <style>
+        /* 必须是 input 同时具有 value 这个属性选择这个元素[] */
+        /*input[value] {*/
+        /*    color: hotpink;*/
+        /*}*/
+
+        /* 只选择 type=text 文本框的 input 选取出来 */
+        input[type=text] {
+            color: hotpink;
+        }
+
+        /* 选择首先是 div 然后具有 class 属性，并且属性值必须是 icon 开头的这些元素 */
+        div[class^=icon] {
+            color: red;
+        }
+
+        /* 选择首先是 section 然后具有 class 属性，并且属性值必须是 data 结尾的这些元素 */
+        section[class$=data] {
+            color: blue;
+        }
+
+        /* 类选择器 属性选择器 伪类选择器 权重都是 10 */
+        div.icon1 {
+            color: skyblue;
+        }
+    </style>
+</head>
+<body>
+<!-- 1. 利用属性选择器就可以不用借助于类或者 id 选择器 -->
+<!--<input type="text" value="请输入用户名">-->
+<!--<input type="text">-->
+<!-- 2. 属性选择器还可以选择属性=值的某些元素 重点务必掌握 -->
+<input type="text" name="" id="one">
+<input type="password" name="" id="two">
+<!-- 3. 属性选择器可以选择属性值开头的某些元素 -->
+<div class="icon1">小图标1</div>
+<div class="icon2">小图标2</div>
+<div class="icon3">小图标3</div>
+<div class="icon4">小图标4</div>
+<div>我是打酱油的</div>
+<!-- 4. 属性选择器可以选择属性值结尾的某些元素 -->
+<section class="icon1-data">我是安其拉</section>
+<section class="icon2-data">我是哥斯拉</section>
+<section class="icon3-ico">哪我是谁</section>
+
+</body>
+</html>
+```
+
+![](/assets/web/202204071022824.gif)
 
 ### 伪类选择器
 
@@ -77,9 +156,9 @@ CSS3 中新增了伪类选择器和伪元素选择器，他们之间的定义和
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201161720332.png)
+![图片描述](/assets/web/202201161720332.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201161720395.png)
+![图片描述](/assets/web/202201161720395.png)
 
 ##### **获得焦点验证**
 
@@ -104,9 +183,9 @@ CSS3 中新增了伪类选择器和伪元素选择器，他们之间的定义和
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201161720063.png)
+![图片描述](/assets/web/202201161720063.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201161720351.png)
+![图片描述](/assets/web/202201161720351.png)
 
 常见的表单元素伪类选择器功能描述如下表所示：
 
@@ -127,6 +206,229 @@ CSS3 中新增了伪类选择器和伪元素选择器，他们之间的定义和
 
 #### 结构伪类选择器
 
+`nth-child(n)` 选择某个父元素的一个或多个特定的子元素（重点）。
+
+- n 可以是数字，关键字和公式
+- n 如果是数字，就是选择第 n 个子元素，里面数字从 1 开始……
+- n 可以是关键字：even 偶数，odd 奇数
+- n 可以是公式：常见的公式如下（如果 n 是公式，则从 n = 0 开始计算，但是第 0 个元素和超出了元素的个数会被忽略）
+
+| 公式   | 取值                               |
+| ------ | ---------------------------------- |
+| `2n`   | 偶数（2、4、6、……）                |
+| `2n+1` | 奇数（1、3、5、……）                |
+| `5n`   | 5   10   15...                     |
+| `n+5`  | 从第 5 个开始（包含第 5 个）到最后 |
+| `-n+5` | 前 5 个（包含第 5 个）             |
+
+结构伪类选择器主要根据文档结构来选择元素，常用于根据父级来选择其子元素。
+
+| 选择器             | 简介                          |
+| ------------------ | ----------------------------- |
+| `E:first-child`    | 匹配父元素中的第一个子元素 E  |
+| `E:last-child`     | 匹配父元素中最后一个 E 元素   |
+| `E:nth-child(n)`   | 匹配父元素中的第 n 个子元素 E |
+| `E:first-of-type`  | 指定类型 E 的第一个           |
+| `E:last-of-type`   | 指定类型 E 的最后一个         |
+| `E:nth-of-type(n)` | 指定类型 E 的第 n 个          |
+
+区别：
+
+1. nth-child 对父元素里面所有孩子排序选择（序号是固定的） 先找到第 n 个孩子，然后看看是否和 E 匹配
+2. nth-of-type 对父元素里面指定子元素进行排序选择。 先去匹配 E，然后再根据 E 找第 n 个孩子
+
+小结：
+
+- 结构伪类选择器一般用于选择父级里面的第几个孩子
+- **nth-child 对父元素里面所有孩子排序选择（序号是固定的） 先找到第 n 个孩子，然后看看是否和 E 匹配**
+- **nth-of-type 对父元素里面指定子元素进行排序选择。 先去匹配 E，然后再根据 E 找第 n 个孩子**
+- **若父元素内都是同一种标签（如：列表），优先用 nth-child，否则就只能使用 nth-of-type**
+- 类选择器、属性选择器、伪类选择器，权重为 10
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3新增结构伪类选择器</title>
+    <style>
+        /* 1. 选择 ul 里面的第一个孩子 小 li */
+        ul li:first-child {
+            background-color: pink;
+        }
+
+        /* 2. 选择 ul 里面的最后一个孩子 小 li */
+        ul li:last-child {
+            background-color: pink;
+        }
+
+        /* 3. 选择 ul 里面的第 2 个孩子 小 li */
+        ul li:nth-child(2) {
+            background-color: skyblue;
+        }
+
+        /* 3. 选择 ul 里面的第 6 个孩子 小 li */
+        ul li:nth-child(6) {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li>我是第1个孩子</li>
+    <li>我是第2个孩子</li>
+    <li>我是第3个孩子</li>
+    <li>我是第4个孩子</li>
+    <li>我是第5个孩子</li>
+    <li>我是第6个孩子</li>
+    <li>我是第7个孩子</li>
+    <li>我是第8个孩子</li>
+</ul>
+</body>
+</html>
+```
+
+![](/assets/web/202204071057414.png)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3新增结构伪类选择器-nth-child</title>
+    <style>
+        /* 1.把所有的偶数 even 的孩子选出来 */
+        ul li:nth-child(even) {
+            background-color: #ccc;
+        }
+
+        /* 2.把所有的奇数 odd 的孩子选出来 */
+        ul li:nth-child(odd) {
+            background-color: gray;
+        }
+
+        /* 3.nth-child(n) 从 0 开始每次加 1 往后面计算，这里面必须是 n，不能是其他的字母，此处选择了所有的孩子 */
+        /* ol li:nth-child(n) {*/
+        /*    background-color: pink;*/
+        /*}*/
+        /* 4.nth-child(2n) 母选择了所有的偶数孩子 等价于 even */
+        /*ol li:nth-child(2n) {*/
+        /*    background-color: pink;*/
+        /*}*/
+        /* 5.nth-child(2n+1) 母选择了所有的奇数孩子 等价于 odd */
+        /*ol li:nth-child(2n+1) {*/
+        /*    background-color: skyblue;*/
+        /*} */
+        /* 6.从第 3 个开始（包含第 3 个）到最后 */
+        /*ol li:nth-child(n+3) {*/
+        /*    background-color: pink;*/
+        /*} */
+        /*7.前 3 个（包含第 3 个）*/
+        ol li:nth-child(-n+3) {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+<ul>
+    <li>我是第1个孩子</li>
+    <li>我是第2个孩子</li>
+    <li>我是第3个孩子</li>
+    <li>我是第4个孩子</li>
+    <li>我是第5个孩子</li>
+    <li>我是第6个孩子</li>
+    <li>我是第7个孩子</li>
+    <li>我是第8个孩子</li>
+</ul>
+<ol>
+    <li>我是第1个孩子</li>
+    <li>我是第2个孩子</li>
+    <li>我是第3个孩子</li>
+    <li>我是第4个孩子</li>
+    <li>我是第5个孩子</li>
+    <li>我是第6个孩子</li>
+    <li>我是第7个孩子</li>
+    <li>我是第8个孩子</li>
+</ol>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071058471.png)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3新增选择器nth-type-of</title>
+    <style>
+        ul li:first-of-type {
+            background-color: pink;
+        }
+
+        ul li:last-of-type {
+            background-color: pink;
+        }
+
+        ul li:nth-of-type(even) {
+            background-color: skyblue;
+        }
+
+        /* nth-child 会把所有的盒子都排列序号 */
+        /* 执行的时候首先看 :nth-child(1) 之后回去看 前面 div */
+        /* 所以此处先排序：*/
+        /* 1号：<p>光头强</p> */
+        /* 2号：<div>熊大</div> */
+        /* 3号：<div>熊二</div> */
+        /* 再回过头看，此时会发现，1号并不是 div，所以不生效！*/
+
+        section div:nth-child(1) {
+            background-color: red;	/* 不生效 */
+        }
+
+        /* nth-of-type 会把指定元素的盒子排列序号 */
+        /* 执行的时候首先看 div 指定的元素 之后回去看 :nth-of-type(1) 第几个孩子 */
+        section div:nth-of-type(1) {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+<ul>
+    <li>我是第1个孩子</li>
+    <li>我是第2个孩子</li>
+    <li>我是第3个孩子</li>
+    <li>我是第4个孩子</li>
+    <li>我是第5个孩子</li>
+    <li>我是第6个孩子</li>
+    <li>我是第7个孩子</li>
+    <li>我是第8个孩子</li>
+</ul>
+<!-- 区别 -->
+<section>
+    <p>光头强</p>
+    <div>熊大</div>
+    <div>熊二</div>
+</section>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071059675.png)
+
 结构伪类选择器如下所示：
 
 | 选择器               | 示例                  | 示例说明                                    |
@@ -143,46 +445,7 @@ CSS3 中新增了伪类选择器和伪元素选择器，他们之间的定义和
 | :only-child          | p:only-child          | 选择所有仅有一个子元素，并且子元素是 p 元素 |
 | :only-of-type        | p:only-of-type        | 选择所有仅有一个子元素中为 p 的元素         |
 
-示例代码：
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>title</title>
-    <style>
-      /*strong 父节点中的第三个*/
-      strong:nth-child(3) {
-        background-color: yellow;
-      }
-      /*strong 父节点中，类型为 strong 的第三个*/
-      strong:nth-of-type(3) {
-        background-color: yellow;
-      }
-    </style>
-  </head>
-  <body>
-    <ul>
-      <li>
-        <strong>hello world1</strong>
-        <h1>hello world2</h1>
-        <strong>hello world3</strong>
-        <h1>hello world4</h1>
-        <strong>hello world5</strong>
-      </li>
-    </ul>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201161722419.png)
-
-在这里，能够区别`nth-child`与`nth-of-type`
-
-> child说明是在父元素里排第几个，他们不同标签都可以，而type就不行，它得是同标签的第几个
 
 ### 伪元素选择器
 
@@ -199,6 +462,221 @@ CSS3 中新增了伪类选择器和伪元素选择器，他们之间的定义和
 | ::after        | p::after        | 在选择器后增加内容 |
 
 可以用 content 属性和 before 及 after 伪元素配合使用来插入生成内容。
+
+注意：
+
+- before 和 after 创建一个元素，属于行内元素
+- 新创建的这个元素在文档树中是找不到的，所以我们称为伪元素
+- 语法：`element::before{}`
+- before 和 after 必须有 content 属性
+- before 在父元素内容的前面创建元素，after 在父元素内容的后面创建元素
+- 伪元素选择器和标签选择器一样，权重为 1
+
+**（1）伪元素选择器使用场景1：伪元素字体图标**
+
+```css
+p::before {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	content: '\e91e';
+	font-size: 20px;
+}
+```
+
+**（2）伪元素选择器使用场景2：仿土豆效果**
+
+```css
+/* 当我们鼠标经过了 土豆这个盒子，就让里面 before 遮罩层显示出来 */
+.tudou:hover::before {
+	/* 而是显示元素 */
+    display: block;
+}
+```
+
+**（3）伪元素选择器使用场景3：伪元素清除浮动**
+
+1. 额外标签法也称为隔墙法，是 W3C 推荐的做法
+2. 父级添加 overflow 属性
+3. 父级添加 after 伪元素
+4. 父级添加双伪元素
+
+额外标签法也称为隔墙法，是 W3C 推荐的做法。
+
+![](/assets/web/202204071107733.png)
+
+注意：要求这个新的空标签必须是块级元素。
+
+后面两种伪元素清除浮动算是第一种额外标签法的一个升级和优化。
+
+```css
+.clearfix:after {
+	content: "";			/* 伪元素必须写的属性 */
+	display: block;			/* 插入的元素必须是块级 */
+	height: 0;				/* 不要看见这个元素 */
+	clear: both;			/* 核心代码清除浮动 */
+	visibility: hidden;		/* 不要看见这个元素 */
+}
+```
+
+```css
+.clearfix:before,
+.clearfix:after {
+	content: "";
+	display: table;			/* 转换为块级元素并且一行显示 */
+}
+
+.clearfix:after {
+	clear: both;
+}
+```
+
+案例：
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>伪元素选择器before和after</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: salmon;
+        }
+
+        /* div::before 权重是 2 */
+        div::before {
+            /* 这个 content 是必须要写的 */
+            /* display: inline-block; */
+            content: '我';
+            /* width: 30px;
+            height: 40px;
+            background-color: purple; */
+        }
+
+        div::after {
+            content: '小猪佩奇';
+        }
+    </style>
+</head>
+<body>
+<div>
+    是
+</div>
+</body>
+</html>
+```
+
+![](/assets/web/202204071110666.gif)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>伪元素选择器使用场景-字体图标</title>
+    <style>
+        @font-face {
+            font-family: 'icomoon';
+            src: url('fonts/icomoon.eot?1lv3na');
+            src: url('fonts/icomoon.eot?1lv3na#iefix') format('embedded-opentype'),
+            url('fonts/icomoon.ttf?1lv3na') format('truetype'),
+            url('fonts/icomoon.woff?1lv3na') format('woff'),
+            url('fonts/icomoon.svg?1lv3na#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+
+        div {
+            position: relative;
+            width: 200px;
+            height: 35px;
+            border: 1px solid red;
+        }
+
+        div::after {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: 'icomoon';
+            /* content: ''; */
+            content: '\e91e';
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071111438.png)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>伪元素选择器使用场景2-仿土豆网显示隐藏遮罩案例</title>
+    <style>
+        .tudou {
+            position: relative;
+            width: 444px;
+            height: 320px;
+            background-color: pink;
+            margin: 30px auto;
+        }
+
+        .tudou img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tudou::before {
+            content: '';
+            /* 隐藏遮罩层 */
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .4) url(images/arr.png) no-repeat center;
+        }
+
+        /* 当我们鼠标经过了土豆这个盒子，就让里面 before 遮罩层显示出来 */
+        .tudou:hover::before {
+            /* 而是显示元素 */
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+<div class="tudou">
+    <img src="images/tudou.jpg" alt="">
+</div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071111258.gif)
 
 ### CSS样式权重
 
@@ -306,7 +784,7 @@ word-wrap: normal|break-word;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201162022655.png)
+![图片描述](/assets/web/202201162022655.png)
 
 #### word-break 属性
 
@@ -388,7 +866,7 @@ span {
 可以看到，`nbsp;`和`<br>`可以正常发挥作用，而连续的空格会被缩减成一个（比如This和is之间的三个空格变成了一个），换行符也全都无效。句子超过一行后会自动换行，而长度超过一行的单个单词会超出边界。
 接下来我们看下， 给它上面三个css属性赋值后会出现什么变化。
 
-![image-20220223103822774](https://gitee.com/Dye/statics/raw/master/img/202202231038860.png)
+![image-20220223103822774](/assets/web/202202231038860.png)
 
 ##### white-space
 
@@ -400,13 +878,13 @@ span {
 
 不仅空格被合并，换行符无效，连原本的自动换行都没了！只有`</br>`才能导致换行！所以这个值的表现还是挺简单的，我们可以理解为`**永不换行**`。
 
-![image-20220223104003160](https://gitee.com/Dye/statics/raw/master/img/202202231040228.png)
+![image-20220223104003160](/assets/web/202202231040228.png)
 
 `white-space:pre`：
 
 空格和换行符全都被保留了下来！不过自动换行还是没了。保留，所以`pre`其实是`preserve`的缩写，这样就好记了。
 
-![image-20220223104041150](https://gitee.com/Dye/statics/raw/master/img/202202231040221.png)
+![image-20220223104041150](/assets/web/202202231040221.png)
 
 `white-space:pre-wrap`：
 
@@ -414,13 +892,13 @@ span {
 
 **warp是换行**
 
-![image-20220223104135679](https://gitee.com/Dye/statics/raw/master/img/202202231041764.png)
+![image-20220223104135679](/assets/web/202202231041764.png)
 
 `white-space:pre-line`：
 
 空格被合并了，但是换行符可以发挥作用，`line`应该是`new line`的意思，自动换行还在，所以`pre-line`其实是`preserve`+`new line`+`wrap`。
 
-![image-20220223110350736](https://gitee.com/Dye/statics/raw/master/img/202202231103817.png)
+![image-20220223110350736](/assets/web/202202231103817.png)
 
 
 
@@ -442,7 +920,7 @@ word-break:keep-all
 
 **所有“单词”一律不拆分换行**，注意，我这里的“单词”包括连续的中文字符（还有日文、韩文等），或者可以理解为**只有空格可以触发自动换行**
 
-![image-20220223111430810](https://gitee.com/Dye/statics/raw/master/img/202202231114882.png)
+![image-20220223111430810](/assets/web/202202231114882.png)
 
 **(这后面换行是因为后面有空格)**
 
@@ -450,7 +928,7 @@ word-break:keep-all
 
 **所有单词碰到边界一律拆分换行**，不管你是`incomprehensibilities`这样一行都显示不下的单词，还是`long`这样很短的单词，只要碰到边界，都会被强制拆分换行。所以用`word-break:break-all`时要慎重呀。
 
-![image-20220223111617812](https://gitee.com/Dye/statics/raw/master/img/202202231116891.png)
+![image-20220223111617812](/assets/web/202202231116891.png)
 这样的效果好像并不太好呀，能不能就把incomprehensibilities拆一下，其它的单词不拆呢？那就需要下面这个属性了：
 
 ##### word-wrap（overflow-wrap）
@@ -459,7 +937,7 @@ word-break:keep-all
 
 **这个属性也是控制单词如何被拆分换行的**，实际上是作为`word-break`的互补，它只有两个值：`normal | break-word`，那我们看下`break-word`：
 
-![image-20220223111708834](https://gitee.com/Dye/statics/raw/master/img/202202231117913.png)
+![image-20220223111708834](/assets/web/202202231117913.png)
 
 终于达到了上文我们希望的效果，**只有当一个单词一整行都显示不下时，才会拆分换行该单词**。
 所以我觉得`overflow-wrap`更好理解好记一些，**overflow，只有长到溢出的单词才会被强制拆分换行！**
@@ -767,7 +1245,7 @@ border-radius: 1-4 length|% / 1-4 length|%;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201171613915.png)
+![图片描述](/assets/web/202201171613915.png)
 
 示例代码中的圆角样式也可以这样设置：
 
@@ -825,7 +1303,7 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201171614867.png)
+![图片描述](/assets/web/202201171614867.png)
 
 - 盒子阴影面积大小可用 rgba() 效果会柔和一些，后期会很常用；
 
@@ -861,7 +1339,7 @@ border-image: source slice width outset repeat|initial|inherit;
         height: 100px;
         text-align: center;
         border: 15px solid transparent; /*设置边框样式*/
-        border-image: url("https://gitee.com/Dye/statics/raw/master/img/202201171617528.png")
+        border-image: url("/assets/web/202201171617528.png")
           30 30 round; /*设置边框图片*/
       }
     </style>
@@ -874,7 +1352,7 @@ border-image: source slice width outset repeat|initial|inherit;
 
 结果：
 
-![image-20220117161811877](https://gitee.com/Dye/statics/raw/master/img/202201171618930.png)
+![image-20220117161811877](/assets/web/202201171618930.png)
 
 #### border-image-source
 
@@ -886,7 +1364,7 @@ border-image: source slice width outset repeat|initial|inherit;
 - 没有单位，默认单位就是像素(px)。例如：border-image:url(border.png) 27 repeat;这里的27专指27px。
 - 支持百分比值，百分比值大小是相对于边框图片的大小，假设边框图片大小为400px*300px，则20%的实际效果就是剪裁了图片的60px 80px 60px 80px的四边大小。
 - 剪裁特性。类似于CSS中的clip属性。其有1~4个参数，代表上右下左四个方位的剪裁，符合CSS普遍的方位规则（与margin，padding等或border-width一致），举个简单的例子，前面提到，支持百分比宽度，所以这里“30% 35% 40% 30%”的示意可以用下图表示：
-- ![clipboard.png](https://gitee.com/Dye/statics/raw/master/img/202201182051126.png)
+- ![clipboard.png](/assets/web/202201182051126.png)
 - *距离图片上部30%的地方，距离右边35%，距离底部40%，左边30%的地方各剪裁一下。也就是对图片进行了“四刀切”，形成了九个分离的区域，这就是九宫格*
 
 #### border-image-repeat
@@ -907,21 +1385,21 @@ border-image: source slice width outset repeat|initial|inherit;
 
 ##### 实际渲染规则
 
-![clipboard.png](https://gitee.com/Dye/statics/raw/master/img/202201182056704.png)
+![clipboard.png](/assets/web/202201182056704.png)
 
 通过裁切属性变成
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201182109963.gif)
+![图片描述](/assets/web/202201182109963.gif)
 
 我们放开看，
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201182112406.jpeg)
+![图片描述](/assets/web/202201182112406.jpeg)
 
 - **如图 在border-image中的橙红色的四个边角只会呆在border的四个角,并且水平和垂直方向均被拉伸来填充border的四个角。**
 - 如图 上下区域即border-top-image和border-bottom-image受到第一个参数——水平方向效果影响：如果为repeat，则此区域被水平重复(round水平平铺，stretch水平拉伸)来填充对应的上下border**【该区域在垂直方向上首先会按所对应的border-image-width的值等比缩放，然后再按参数设置在边框水平方向上进行重复或平铺或拉伸】**
 - 左右区域border-left-image和border-right-image 的作用效果亦然**【该区域在水平方向上首先会按所对应的border-image-width的值等比缩放，然后再按参数设置在边框垂直方向上进行重复或平铺或拉伸】**
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201182246189.png)
+![图片描述](/assets/web/202201182246189.png)
 
 #### border-image-width
 
@@ -942,7 +1420,7 @@ auto 使用 auto， border-image-width 将会使用 border-image-slice 的值
 
 效果如下
 （白框为border）
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191439507.png)
+![图片描述](/assets/web/202201191439507.png)
 
 ```css
 border-image-width: 1.5rem;
@@ -950,7 +1428,7 @@ border-image-width: 1.5rem;
 
 效果如下
 （白框为border）
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191439407.png)
+![图片描述](/assets/web/202201191439407.png)
 
 ------
 
@@ -962,11 +1440,11 @@ border-image-width: 6rem 1.5rem;
 
 效果如下
 （白框为border）
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191439999.png)
+![图片描述](/assets/web/202201191439999.png)
 
 > border-image-width用来设置边框素材的宽度,当同时设置了border-image-width和border-width属性时，那么边框的实际宽度由border-width属性决定。此时，如果border-image-width属性小于border-width属性，边框图片会沿边框的外侧分布而内侧留空形成 **padding** 的效果；如果border-image-width属性大于border-width属性，边框图片会仍会沿边框的外侧分布而**内测溢出**，如下图
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191443559.png)
+![图片描述](/assets/web/202201191443559.png)
 
 #### border-image-outset
 
@@ -984,7 +1462,7 @@ border-image-width: 1.5rem;
 border-image-outset: 1.5rem;
 ```
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191441533.png)
+![图片描述](/assets/web/202201191441533.png)
 
 ## CSS3背景
 
@@ -1126,7 +1604,7 @@ background-origin: border-box|padding-box|content-box;
 | padding-box | 以填充区为原点来定位。 |
 | content-box | 以内容为原点来定位。   |
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191455619.png)
+![图片描述](/assets/web/202201191455619.png)
 
 ### 背景裁剪
 
@@ -1168,7 +1646,7 @@ background-clip: border-box|padding-box|content-box;
 </html>
 ```
 
-![image-20220119145800827](https://gitee.com/Dye/statics/raw/master/img/202201191458895.png)
+![image-20220119145800827](/assets/web/202201191458895.png)
 
 ## CSS3 颜色
 
@@ -1272,7 +1750,7 @@ rgba(r,g,b,<opacity>)
 </html>
 ```
 
-显示效果： ![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191526180.png)
+显示效果： ![图片描述](/assets/web/202201191526180.png)
 
 由示例图可以发现，opacity 效果中的文字随着透明值下降越来越看不清楚，全透明时文字已经无法显示，而 rgba 效果则不具有这样的问题。rgba 同样也可以控制文字的透明度
 
@@ -1290,7 +1768,7 @@ hsl(hue,staturation,lightness)
 
 CSS3 的色相使用一个圆环来表示，取值范围 0~360。其中 0 和 360 表示红色，120 表示绿色，240 表示蓝色，其他的颜色依次类推。CSS3 色相环如下图所示：
 
-![image-20200723102516677](https://gitee.com/Dye/statics/raw/master/img/202201191546819.png)
+![image-20200723102516677](/assets/web/202201191546819.png)
 
 #### **S(staturation) 饱和度**
 
@@ -1355,11 +1833,11 @@ background-image: linear-gradient(direction, color-stop1, color-stop2, ...);
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191616761.png)
+![图片描述](/assets/web/202201191616761.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191616831.png)
+![图片描述](/assets/web/202201191616831.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191616744.png)
+![图片描述](/assets/web/202201191616744.png)
 
 #### **使用角度**
 
@@ -1367,11 +1845,11 @@ background-image: linear-gradient(direction, color-stop1, color-stop2, ...);
 
 角度是指水平线和渐变线之间的角度，逆时针方向计算。
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201201309540.png" alt="无标题" style="zoom:50%;" />
+<img src="/assets/web/202201201309540.png" alt="无标题" style="zoom:50%;" />
 
 换句话说，0deg 将创建一个从下到上的渐变，90deg 将创建一个从左到右的渐变。如下图所示：
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201191616910.png" alt="图片描述" style="zoom: 67%;" />
+<img src="/assets/web/202201191616910.png" alt="图片描述" style="zoom: 67%;" />
 
 > 需要注意的是，当前很多浏览器（Chrome 、Safari 、firefox 等）依然使用了旧的标准，即 0deg 将创建一个从左到右的渐变，90deg 将创建一个从下到上的渐变。可以通过换算公式 **90 - x = y** 来重新确定角度。其中 x 为标准角度，y 为非标准角度。
 
@@ -1406,7 +1884,7 @@ background-image: linear-gradient(angle, color-stop1, color-stop2);
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201191616894.png)
+![图片描述](/assets/web/202201191616894.png)
 
 **多颜色渐变**
 
@@ -1436,7 +1914,7 @@ background-image: linear-gradient(
 
 显示效果：
 
-![image-20220120131555734](https://gitee.com/Dye/statics/raw/master/img/202201201315794.png)
+![image-20220120131555734](/assets/web/202201201315794.png)
 
 ### 径向渐变
 
@@ -1481,17 +1959,17 @@ size 的四个属性值：
 
 > 以此为最近角，最近边；最远角，最远
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201202111495.jpeg" style="zoom:50%;" />
+<img src="/assets/web/202201202111495.jpeg" style="zoom:50%;" />
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201202112702.jpeg" style="zoom:50%;" />
-
-
-
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201202112328.jpeg" style="zoom:50%;" />
+<img src="/assets/web/202201202112702.jpeg" style="zoom:50%;" />
 
 
 
-<img src="https://gitee.com/Dye/statics/raw/master/img/202201202112960.jpeg" style="zoom: 50%;" />
+<img src="/assets/web/202201202112328.jpeg" style="zoom:50%;" />
+
+
+
+<img src="/assets/web/202201202112960.jpeg" style="zoom: 50%;" />
 
 默认情况下，颜色均匀分布，示例代码如下：
 
@@ -1517,7 +1995,7 @@ background-image: radial-gradient(circle, red, yellow, green);
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201201318158.png)
+![图片描述](/assets/web/202201201318158.png)
 
 ![图片描述](https://doc.shiyanlou.com/courses/uid1454664-20201111-1605055815220)
 
@@ -1571,9 +2049,9 @@ background-image: radial-gradient(circle, red, yellow, green);
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201201318077.png)
+![图片描述](/assets/web/202201201318077.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201202116139.png)
+![图片描述](/assets/web/202201202116139.png)
 
 ![图片描述](https://doc.shiyanlou.com/courses/uid1454664-20201111-1605056218167)
 
@@ -1613,7 +2091,7 @@ CSS3 也可以对文字实现渐变效果。渲染的方式有很多种，这里
 
 
 
-![image-20220120212522152](https://gitee.com/Dye/statics/raw/master/img/202201202125217.png)
+![image-20220120212522152](/assets/web/202201202125217.png)
 
 ## CSS3转换
 
@@ -1622,6 +2100,22 @@ CSS3 也可以对文字实现渐变效果。渲染的方式有很多种，这里
 CSS3 的 2D transform 获得了各主流浏览器的支持，但是 CSS 3D transform 只有少数浏览器支持。
 
 transform 实现了一些可以用于 SVG 实现的变形功能。可以作用于内联元素和块级元素，该属性可以实现旋转、缩放、移动等功能。使用 transform 属性还可以控制文字的变形，这种纯粹的使用 CSS 进行文本控制的方式相比于使用图像实现具有更好的可操作性。也是文字变形的首选解决方案。
+
+转换（transform）是 CSS3 中具有颠覆性的特征之一。可以实现元素的位移、旋转、缩放等效果。
+
+转换（transform）你可以简单理解为变形。
+
+- 移动：translate
+- 旋转：rotate
+- 缩放：scale
+
+### 二维坐标系
+
+2D 转换是改变标签在二维平面上的位置和形状的一种技术，先来学习二维坐标系。
+
+<img src="/assets/web/202204071136889.png" style="zoom: 50%;" />
+
+
 
 transform 属性的基本语法如下：
 
@@ -1649,162 +2143,501 @@ transform: translate(80, 80) rotate(30deg) scale(2, 2);
 
 ### rotate() 旋转
 
-在 CSS3 中，使用 rotate() 函数能够旋转指定的元素对象，主要在二维空间内进行操作。可以接受一个角度参数值，用来定义旋转的幅度。操作的元素对象既可以是内联元素，也可以是块级元素。语法格式如下：
+2D 旋转指的是让元素在 2 维平面内顺时针旋转或者逆时针旋转。
 
-```html
-rotate(angle)
+<img src="/assets/web/202204071139960.png" style="zoom:50%;" />
+
+语法：
+
+```css
+transform: rotate(度数)
 ```
 
-其中 angle 为旋转的值，例如：angle 值为 30deg 表示元素**顺时针**旋转 30 度。
+重点：
+
+- rotate 里面跟度数，单位是 deg，比如 rotate(45deg)
+- 角度为正时，顺时针；负时，逆时针
+- 默认旋转的中心点是元素的中心点
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2D转换之旋转rotate</title>
     <style>
-      div {
-        margin: 30px;
-        width: 200px;
-        height: 100px;
-        background-color: yellow;
-        /* Rotate div */
-        transform: rotate(30deg);
-        -ms-transform: rotate(30deg); /* Internet Explorer */
-        -moz-transform: rotate(30deg); /* Firefox */
-        -webkit-transform: rotate(30deg); /* Safari 和 Chrome */
-        -o-transform: rotate(30deg); /* Opera */
-      }
+        img {
+            width: 150px;
+            /* 顺时针旋转45度 */
+            /* transform: rotate(45deg); */
+            border-radius: 50%;
+            border: 5px solid pink;
+            /* 过渡写到本身上，谁做动画给谁加 */
+            transition: all 0.5s;
+        }
+
+        img:hover {
+            transform: rotate(360deg);
+        }
     </style>
-  </head>
-  <body>
-    <div>Hello World</div>
-  </body>
+</head>
+
+<body>
+<img src="media/pic.jpg" alt="">
+</body>
+
 </html>
 ```
 
-显示效果：
+![](/assets/web/202204071139496.gif)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211110548.png)
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旋转三角</title>
+    <style>
+        div {
+            position: relative;
+            width: 249px;
+            height: 35px;
+            border: 1px solid #000;
+        }
+
+        /* 三角可以通过盒子来制作，不一定非得字体图标 */
+        /* 让一个旋转45度的正方形（菱形）的两个边框显示出来 */
+        div::after {
+            content: "";
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            width: 10px;
+            height: 10px;
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            transform: rotate(45deg);
+            transition: all 0.2s;
+        }
+
+        /* 鼠标经过 div 里面的三角旋转 */
+        div:hover::after {
+            transform: rotate(225deg);
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071139494.gif)
 
 ### translate() 移动
 
-translate() 函数能够重新定位元素坐标，该函数包含两个参数值，分别用来定位 X 轴和 Y 轴的新坐标。语法格式如下：
+2D 移动是 2D 转换里面的一种功能，可以改变元素在页面中的位置，类似定位。
+
+![](/assets/web/202204071137079.png)
+
+语法：
 
 ```css
-translate(<translate-value>[,<translate-value>])
+transform: translate(x, y); 
+/* 或者分开写 */
+transform: translateX(n);
+transform: translateY(n);
 ```
 
-其中 `<translate-value>` 参数表示坐标值，第一个参数表示相对于原坐标 X 轴的偏移量，第二个参数表示相对于原坐标的 Y 轴的偏移量。若是第二个参数省略，这表示 X 轴和 Y 轴的偏移量一致。参数值可以是正数也可以是负数，负数为反向偏移。
+重点：
 
-示例代码：
+- 定义 2D 转换中的移动，沿着 X 和 Y 轴移动元素
+- translate 最大的优点：**不会影响到任何其他元素的位置**（优于定位的地方）
+- translate 中的百分比单位是**相对于自身**元素的 translate: (50%, 50%);
+- **对行内元素没有效果**
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2D转换之移动translate</title>
     <style>
-      div {
-        margin: 10px;
-        width: 100px;
-        height: 100px;
-        background-color: yellow;
-        float: left;
-      }
-      div:hover {
-        /* Rotate div */
-        transform: translate(0, 10px);
-        -ms-transform: translate(0, 10px); /* Internet Explorer */
-        -moz-transform: translate(0, 10px); /* Firefox */
-        -webkit-transform: translate(0, 10px); /* Safari 和 Chrome */
-        -o-transform: translate(0, 10px); /* Opera */
-      }
+        /* 移动盒子的位置：定位、盒子的外边距、2D转换移动 */
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: hotpink;
+            /* x就是x轴上移动位置，y就是y轴上移动位置，中间用逗号分隔 */
+            /* transform: translate(x, y); */
+            /* transform: translate(100px, 100px); */
+            /* 1. 只移动x坐标 */
+            /* transform: translate(100px, 0); */
+            /* transform: translateX(100px); */
+            /* 2. 只移动y坐标 */
+            /* transform: translate(0, 100px); */
+            /* transform: translateY(100px); */
+        }
+
+        div:first-child {
+            transform: translate(30px, 30px);
+        }
+
+        div:last-child {
+            background-color: black;
+        }
     </style>
-  </head>
-  <body>
-    <div>Hello World</div>
-    <div id="div1">CSS3</div>
-  </body>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+</body>
+
 </html>
 ```
 
-显示效果：
+<img src="/assets/web/202204071137197.png" style="zoom: 80%;" />
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211111976.png)
+```html
+<!doctype html>
+<html lang="en">
 
-> 注意：当仅需要设置垂直位移而不需要设置水平位移时，第一个参数值设置为 0。
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>让一个盒子水平居中</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-color: hotpink;
+            /* 1. 我们 tranlate 里面的参数是可以用 % */
+            /* 2. 如果里面的参数是 % 那么移动的距离是以盒子自身的宽度或者高度来对比的 */
+            /* 这里的 50% 就是 250px 因为盒子的宽度是 500px */
+            /* transform: translateX(50%); */
+        }
+
+        p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background-color: black;
+            /*
+            在前面的定位中使用直接减去自身宽度与高度的一半，此种方式的缺点在于不能随盒子大小的变化而变化
+            margin-top: -100px;
+            margin-left: -100px;
+            */
+            transform: translate(-50%, -50%);
+        }
+
+        span {
+            /* translate 对于行内元素是无效的 */
+            transform: translate(300px, 300px);
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <p></p>
+</div>
+<span>123</span>
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071137586.png" style="zoom:50%;" />
+
+
+
+### 转换中心点 transform-origin
+
+我们可以设置元素转换的中心点。
+
+语法：
+
+```css
+transform-origin: x y;
+```
+
+重点：
+
+- 注意后面的参数 x 和 y 用空格隔开
+- **x y 默认转换的中心点是元素的中心点（50% 50%）**
+- 还可以给 x y 设置 像素 或者 方位名词（top  bottom  left  right  center）
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>transform-origin</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            margin: 100px auto;
+            transition: all 1s;
+            /* 1.可以跟方位名词 */
+            /* transform-origin: left bottom; */
+            /* 2. 默认的是 50% 50% 等价于 center center */
+            /* 3. 可以是 px 像素 */
+            transform-origin: 25px 25px;
+        }
+
+        div:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071141841.gif" style="zoom: 33%;" />
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旋转中心点</title>
+    <style>
+        div {
+            /* 溢出隐藏 */
+            overflow: hidden;
+            width: 200px;
+            height: 200px;
+            border: 1px solid pink;
+            margin: 10px;
+            float: left;
+        }
+
+        div::before {
+            content: "黑马";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: hotpink;
+            transform: rotate(180deg);
+            transform-origin: left bottom;
+            transition: all 0.4s;
+        }
+
+        /* 鼠标经过 div 里面的 before 复原 */
+        div:hover::before {
+            transform: rotate(0deg);
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+<div></div>
+<div></div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071141755.gif)
 
 ### scale() 缩放
 
-scale() 函数能够缩放元素大小，该函数包含两个参数，分别用来定义宽和高的缩放比例。语法格式如下：
+缩放，顾名思义，可以放大和缩小。只要给元素添加上了这个属性就能控制它放大还是缩小。
+
+语法：
 
 ```css
-scale(<number>[<number>])
+transform: scale(x, y);
 ```
 
-`<number>` 参数值可以是正数、负数和小数，正数基于设置的宽度和高度将会放大元素，负数值不会缩小元素，而是会翻转元素，例如元素内的文字被翻转，然后在缩放元素。使用小于 1 的小数也可以缩小元素。第二个 `<number>` 省略的情况下，表示高度和宽度的缩放比例一致。
+注意：
 
-示例代码：
+- 注意其中的 x 和 y 用逗号分隔
+- transform: scale(1, 1) ：宽和高都放大一倍，相当于没有放大
+- transform: scale(2, 2) ：宽和高都放大了 2 倍
+- transform: scale(2) ：只写一个参数，第二个参数默认等于第一个参数，相当于 scale(2, 2)
+- transform: scale(0.5, 0.5) ：缩小
+- scale 缩放最大的优势：可以设置缩放的基准点（默认以中心点缩放）；并且缩放不会影响其他盒子的位置（以上两个特点都是直接设置 width 和 height 都无法做到的）
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2D转换之缩放</title>
     <style>
-      div {
-        margin: 100px;
-        width: 100px;
-        height: 100px;
-        background-color: yellow;
-        /* Rotate div */
-        transform: scale(3, 2);
-        -ms-transform: scale(3, 2); /* Internet Explorer */
-        -moz-transform: scale(3, 2); /* Firefox */
-        -webkit-transform: scale(3, 2); /* Safari 和 Chrome */
-        -o-transform: scale(3, 2); /* Opera */
-      }
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            margin: 100px auto;
+            /* 可以设置缩放的中心点 */
+            /* transform-origin: left bottom; */
+        }
+        
+        div:hover {
+            /* 1. 里面写的数字不跟单位 就是倍数的意思， 1 就是 1 倍；2 就是 2 倍 */
+            /* transform: scale(x, y); */
+            /* transform: scale(2, 2); */
+            /* 2. 修改了宽度为原来的 2 倍，高度不变 */
+            /* transform: scale(2, 1); */
+            /* 3. 等比例缩放 同时修改宽度和高度，我们有简单的写法以下是宽度修改了 2 倍，高度默认和第一个参数一样 */
+            /* transform: scale(2); */
+            /* 4. 我们可以进行缩小，小于 1就是缩小 */
+            /* transform: scale(0.5, 0.5); */
+            /* transform: scale(0.5); */
+            /* 5. scale 的优势之处：不会影响其他的盒子，而且可以设置缩放的中心点 */
+            /*
+            直接设置宽高时无法做到以上优点的！
+            width: 300px;
+            height: 300px;
+            */
+            transform: scale(2);
+        }
     </style>
-  </head>
-  <body>
-    <div>Hello World</div>
-  </body>
+</head>
+
+<body>
+    <div></div>
+</body>
+
 </html>
 ```
 
-显示效果：
+<img src="/assets/web/202204071142887.gif" style="zoom:50%;" />
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211116786.png)
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片放大案例</title>
+    <style>
+        div {
+            width: 225px;
+            height: 137px;
+            overflow: hidden;
+            float: left;
+            margin: 10px;
+        }
+
+        div img {
+            transition: all .4s;
+        }
+
+        div img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <a href="#"><img src="media/scale.jpg" alt=""></a>
+</div>
+<div>
+    <a href="#"><img src="media/scale.jpg" alt=""></a>
+</div>
+<div>
+    <a href="#"><img src="media/scale.jpg" alt=""></a>
+</div>
+</body>
+ 
+</html>
+```
+
+![](/assets/web/202204071142899.gif)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li {
+            float: left;
+            width: 30px;
+            height: 30px;
+            border: 1px solid hotpink;
+            margin: 10px;
+            text-align: center;
+            line-height: 30px;
+            list-style: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all .4s;
+        }
+
+        li:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+</ul>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071142893.gif)
 
 > 注意：一定要设置 margin 或者 padding 值，否则当元素放大时页面会显示不全。
-
-当参数设置成以下内容。
-
-```css
-transform: scale(-2);
--ms-transform: scale(-2);
--moz-transform: scale(-2);
--webkit-transform: scale(-2);
--o-transform: scale(-2);
-```
-
-显示效果如下：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211116646.png)
-
-当参数设置成以下内容。
-
-```css
-transform: scale(0.5);
--ms-transform: scale(0.5);
--moz-transform: scale(0.5);
--webkit-transform: scale(0.5);
--o-transform: scale(0.5);
-```
-
-显示效果如下：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211116025.png)
-
-一般该缩放操作都会同 `:hover` 一起使用。
 
 ### skew()倾斜
 
@@ -1847,13 +2680,13 @@ skew(<angle>[,<angle>])
 </html>
 ```
 
-显示效果： ![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211117264.png)
+显示效果： ![图片描述](/assets/web/202201211117264.png)
 
 ### matrix() 变形
 
 matrix() 是矩阵函数，调用该函数可以非常灵活的实现各种变形效果。matrix() 函数包括 6 个参数值，可以用 a-f 来表示。这六个参数值形成了一个 3×3 的矩阵，通过对该矩阵值的重新定义，实现元素的变形效果。
 
-![image-20200813110619233](https://gitee.com/Dye/statics/raw/master/img/202201211119151.png)
+![image-20200813110619233](/assets/web/202201211119151.png)
 
 该函数的矩阵方程可以参考官方文档，其语法格式如下：
 
@@ -1894,7 +2727,7 @@ matrix(<number>,<number>,<number>,<number>,<number>,<number>)
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211119320.png)
+![图片描述](/assets/web/202201211119320.png)
 
 #### 原理：
 
@@ -1902,7 +2735,7 @@ matrix(<number>,<number>,<number>,<number>,<number>,<number>)
 
 根据我们上面说的用矩阵与向量的乘法来施加运动，我们就可以来看一下它到底是怎么运动起来的
 
-![img](https://gitee.com/Dye/statics/raw/master/img/202201211407883.jpeg)
+![img](/assets/web/202201211407883.jpeg)
 
 这么一来我们可以得到一个式子就是：
 
@@ -1979,7 +2812,7 @@ transform：matrix（2,0,0,2,0,0)
 接下来我们把这个旋转放到数学里来看下
 那同样的我们把它写成数学里矩阵的形式：
 
-![img](https://gitee.com/Dye/statics/raw/master/img/202201211448737.jpeg)
+![img](/assets/web/202201211448737.jpeg)
 
 同样的根据矩阵的计算公式，我们可以得到公式：
 
@@ -1987,7 +2820,7 @@ transform：matrix（2,0,0,2,0,0)
 
 现在我们先把公式放在这里，我们来看一下下图的这个正方形，从图中我们可以知道a,b,c,d的坐标分别为：
 
-![img](https://gitee.com/Dye/statics/raw/master/img/202201211448520.png)
+![img](/assets/web/202201211448520.png)
 
 A(0,1) B(1,1) C(1,0) D(0,0)
 
@@ -2002,15 +2835,88 @@ A(0,1) B(1,1) C(1,0) D(0,0)
 
 > transform：matrix（cosθ，-sinθ,sinθ,cosθ,0,0);然后需要旋转多少度就计算出这个度数的cosθ，sinθ就可以达到我们想要的效果啦
 
+### 2D 转换综合写法
 
+注意：
 
-最后，
+1. 同时使用多个转换，其格式为：`transform: translate() rotate() scale()` ...等
+2. 其顺序会影转换的效果。（先旋转会改变坐标轴方向）
+3. 当我们同时有位移和其他属性的时候，记得要将**位移放到最前**
 
-- **同时使用多个转换**，其格式为 `transform: translate() rotate() scale()`；
-- 顺序会影响到转换的效果（先旋转会改变坐标轴方向）；
-- 但我们同时有位置或者其他属性的时候，要将位移放到最前面。
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            transition: all 1s;
+        }
+
+        div:hover {
+            /* transform: rotate(180deg) translate(150px, 50px); */
+            /* 我们同时有位移和其他属性，我们需要把位移放到最前面 */
+            transform: translate(150px, 50px) rotate(180deg) scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071145438.gif" style="zoom:50%;" />
+
+### 2D 转换总结
+
+- 转换 transform 我们简单理解就是变形，有 2D 和 3D 之分
+- 我们暂且学了三个，分别是：位移、旋转 和 缩放
+- 2D 移动 translate(x, y) 最大的优势是不影响其他盒子，里面参数用 %，是相对于自身宽度和高度来计算的
+- 可以分开写比如 translateX(x)  和 translateY(y)
+- 2D 旋转 rotate(度数) 可以实现旋转元素，度数的单位是 deg
+- 2D 缩放 sacle(x, y) 里面参数是数字，不跟单位，可以是小数。最大的优势在于不影响其他盒子
+- 设置转换中心点 transform-origin : x y; 参数可以百分比、像素或者是方位名词
+- 当我们进行综合写法，同时有位移和其他属性的时候，记得要将位移放到最前
 
 ## CSS3 3D 转换
+
+我们生活的环境是 3D 的，照片就是 3D 物体在 2D 平面呈现的例子。
+
+**有什么特点**
+
+- 近大远小
+- 物体后面遮挡不可见
+
+当我们在网页上构建 3D 效果的时候参考这些特点就能产出 3D 效果。
+
+### 三维坐标系
+
+三维坐标系其实就是指立体空间，立体空间是由3个轴共同组成的。
+
+<img src="/assets/web/202204071438486.png" style="zoom: 33%;" />
+
+- x 轴：水平向右（注意：x 右边是正值，左边是负值）
+- y 轴：垂直向下（注意：**y 下面是正值，上面是负值**）
+- z 轴：垂直屏幕（注意：往外面是正值，往里面是负值）
+
+**3D 转换我们主要学习工作中最常用的 3D 位移 和 3D 旋转。**
+
+**主要知识点**
+
+- 3D 位移：translate3d(x, y, z)
+- 3D 旋转：rotate3d(x, y, z)
+- 透视：perspective
+- 3D 呈现：transfrom-style
 
 ### 3D 转换 transform 属性
 
@@ -2045,109 +2951,83 @@ transform: none|transform-functions;
 | skewY(*angle*)                                               | 定义沿着 Y 轴的 2D 倾斜转换。           |
 | perspective(*n*)                                             | 为 3D 转换元素定义透视视图。            |
 
-### transform-origin
+### 3D移动 translate3d
 
-**`transform-origin`** CSS属性让你更改一个元素变形的**原点**。
+3D 移动在 2D 移动的基础上多加了一个可以移动的方向，就是 z 轴方向。
 
-2D 转换元素可以改变元素的 X 和 Y 轴。3D 转换元素，还可以更改元素的 Z 轴。
+- transform:translateX(100px)：仅仅是在 X 轴上移动
+- transform:translateY(100px)：仅仅是在 Y 轴上移动
+- transform:translateZ(100px)：仅仅是在 Z 轴上移动（注意：translateZ 一般用 px 单位）
+- transform:translate3d(x, y, z)：其中 x、y、z 分别指要移动的轴的方向的距离
 
-转换起点是应用转换的点。例如，`rotate()`函数的转换原点是旋转中心。（这个属性的应用原理是先用这个属性的赋值转换该元素，进行变形，然后再用这个属性的值把元素转换回去）
+因为 z 轴是垂直屏幕，**由里指向外面**（发射到我们的眼睛），所以默认是看不到元素在 z 轴的方向上移动（要借助透视）。
 
-默认的转换原点是 `center`
 
-如果定义了两个或更多值并且没有值的关键字，或者唯一使用的关键字是`center`，则第一个值表示水平偏移量，第二个值表示垂直偏移量。
-
-- 一个值：
-  - 必须是`<length>`，`<percentage>`，或 left, center, right, top, bottom关键字中的一个。
-- 两个值：
-  - 其中一个必须是`<length>`，`<percentage>`，或left, center, right关键字中的一个。
-  - 另一个必须是`<length>`，`<percentage>`，或top, center, bottom关键字中的一个。
-- 三个值：
-  - 前两个值和只有两个值时的用法相同。
-  - 第三个值必须是`<length>`。它始终代表Z轴偏移量。
-
-关键字是方便的简写方法，等同于以下[`<percentage>`值：
-
-| keyword  | value  |
-| :------- | :----- |
-| `left`   | `0%`   |
-| `center` | `50%`  |
-| `right`  | `100%` |
-| `top`    | `0%`   |
-| `bottom` | `100%` |
-
-### transform-style 属性
-
-transform-style 属性指定嵌套元素是怎样在三维空间中呈现。在使用此属性前必须先使用 transform 属性。语法如下：
-
-```css
-transform-style: flat|preserve-3d;
-```
-
-| 值          | 描述                             |
-| ----------- | -------------------------------- |
-| flat        | 表示所有子元素在 2D 平面呈现。   |
-| preserve-3d | 表示所有子元素在 3D 空间中呈现。 |
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      #div1 {
-        position: relative;
-        height: 200px;
-        width: 200px;
-        margin: 100px;
-        padding: 10px;
-        border: 1px solid black;
-      }
-
-      #div2 {
-        padding: 50px;
-        position: absolute;
-        border: 1px solid black;
-        background-color: blue;
-        transform: rotateY(60deg);
-        transform-style: preserve-3d;
-        -webkit-transform: rotateY(60deg); /* Safari and Chrome */
-        -webkit-transform-style: preserve-3d; /* Safari and Chrome */
-      }
-
-      #div3 {
-        padding: 40px;
-        position: absolute;
-        border: 1px solid black;
-        background-color: yellow;
-        transform: rotateY(-60deg);
-        -webkit-transform: rotateY(-60deg); /* Safari and Chrome */
-      }
-    </style>
-  </head>
-  <body>
-    <div id="div1">
-      <div id="div2">
-        BLUE
-        <div id="div3">YELLOW</div>
-      </div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211529587.png)
 
 ### perspective 属性
 
-这个属性允许你改变 3D 元素是怎样查看透视图。定义时的 perspective 属性，它是一个元素的子元素的透视图，而不是元素本身。
+<img src="/assets/web/202204071451608.png" style="zoom: 25%;" />
 
- **`perspective`**指定了观察者与 z=0 平面的距离，使具有三维位置变换的元素产生透视效果。 z>0 的三维元素比正常大，而 z<0 时则比正常小，大小程度由该属性的值决定。
+<img src="/assets/web/202204071451021.png" style="zoom:25%;" />
+
+在 2D 平面产生近大远小视觉立体，但是效果只是二维的。
+
+- 如果想要在网页产生 3D 效果需要透视（理解成 3D 物体投影在 2D 平面内）
+- 模拟人类的视觉位置，可认为安排一只眼睛去看
+- 透视我们也称为视距：视距就是人的眼睛到屏幕的距离
+- 距离视觉点越近的，在电脑平面成像越大，越远成像越小
+- 透视的单位是像素
+
+**透视写在被观察元素的父盒子上面。**
+
+d：就是视距，视距就是一个距离人的眼睛到屏幕的距离。
+
+z：就是 z 轴，物体距离屏幕的距离，z 轴越大（正值）我们看到的物体就越大。
+
+
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D移动translate3d</title>
+    <style>
+        body {
+            /* 透视写到被观察元素的父盒子上面 */
+            perspective: 200px;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* transform: translateX(100px) translateY(100px) translateZ(100px); */
+            /* 1. translateZ 沿着 Z 轴移动 */
+            /* 2. translateZ 后面的单位我们一般跟 px */
+            /* 3. translateZ(100px) 向外移动 100px（向我们的眼睛来移动的） */
+            /* 4. 3D 移动有简写的方法 */
+            /* transform: translate3d(x, y, z); */
+            /* transform: translate3d(100px, 100px, 100px); */
+            /* 5. xyz 是不能省略的，如果没有就写 0 */
+            transform: translate3d(400px, 100px, 100px);
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071451018.png)这个属性允许你改变 3D 元素是怎样查看透视图。定义时的 perspective 属性，它是一个元素的子元素的透视图，而不是元素本身。
+
+ **`perspective`**指定了观察者与 z=0 平面的距离，使具有三维位置变换的元素产生透视效果。 **z>0 的三维元素比正常大，而 z<0 时则比正常小，大小程度由该属性的值决定。**
 
 语法如下：
 
@@ -2202,7 +3082,7 @@ perspective: number|none;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211625584.png)
+![图片描述](/assets/web/202201211625584.png)
 
 看完了这里，相信你还不知道理解。
 
@@ -2210,9 +3090,9 @@ perspective: number|none;
 
 | `perspective: 250px;`                                        | `perspective: 350px;`                                        |
 | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| ![image-20220121184948848](https://gitee.com/Dye/statics/raw/master/img/202201211849936.png) | ![image-20220121184957840](https://gitee.com/Dye/statics/raw/master/img/202201211850369.png) |
+| ![image-20220121184948848](/assets/web/202201211849936.png) | ![image-20220121184957840](/assets/web/202201211850369.png) |
 | `perspective: 500px;`                                        | `perspective: 650px;`                                        |
-| ![](https://gitee.com/Dye/statics/raw/master/img/202201211850382.png) | ![image-20220121185034876](https://gitee.com/Dye/statics/raw/master/img/202201211850936.png) |
+| ![](/assets/web/202201211850382.png) | ![image-20220121185034876](/assets/web/202201211850936.png) |
 
 MDN上说立方体的收缩由 [`perspective`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/perspective) 属性定义。它的值越小，视角越深。这个深怎么理解呢？我觉得应该是看的深度，从250到650，你会发现，我们看的从深到浅，最后的一层越来越明显。
 
@@ -2275,17 +3155,769 @@ perspective-origin: x-axis y-axis;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201211859967.png)
+![图片描述](/assets/web/202201211859967.png)
 
 - `left`, 关键字，0值的简记。
 - `center`, 关键字，50%的简记。
 - `right`, 关键字，100%的简记。
 
-![image-20220121190148010](https://gitee.com/Dye/statics/raw/master/img/202201211901129.png)
+![image-20220121190148010](/assets/web/202201211901129.png)
 
 如果用观察者的位置来解释，取bottom来说，现在就站在bottom这一平面看方块，自然只能看到如图所示的图片。
 
+### translateZ
+
+translform:translateZ(100px)：仅仅是在 Z 轴上移动。有了透视，就能看到 translateZ 引起的变化了。
+
+- translateZ：近大远小
+- translateZ：往外是正值
+- translateZ：往里是负值
+
+![](/assets/web/202204071513891.gif)
+
+### 3D旋转 rotate3d
+
+3D旋转指可以让元素在三维平面内沿着 x轴，y轴，z轴或者自定义轴进行旋转。
+
+**语法**
+
+- transform: rotateX(45deg)：沿着 x 轴正方向旋转 45 度
+- transform: rotateY(45deg)：沿着 y 轴正方向旋转 45deg
+- transform: rotateZ(45deg)：沿着 z 轴正方向旋转 45deg
+- transform: rotate3d(x, y, z, deg)：沿着自定义轴旋转 deg 为角度（了解即可）
+
+![](/assets/web/202204071514362.gif)
+
+对于元素旋转的方向的判断，我们需要先学习一个左手准则。
+
+**左手准则**
+
+- 左手的手拇指指向 x 轴的正方向
+- 其余手指的弯曲方向就是该元素沿着 x 轴旋转的方向
+
+<img src="/assets/web/202204071516045.png" style="zoom:50%;" />
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>rotateX</title>
+    <style>
+        body {
+            /* 利用透视产生近大远小效果 */
+            perspective: 300px;
+        }
+
+        img {
+            display: block;
+            margin: 100px auto;
+            transition: all 1s;
+        }
+
+        img:hover {
+            transform: rotateX(45deg);
+        }
+    </style>
+</head>
+
+<body>
+<img src="media/pig.jpg" alt="">
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071502905.gif" style="zoom:50%;" />
+
+---
+
+- 左手的手拇指指向 y 轴的正方向
+- 其余手指的弯曲方向就是该元素沿着 y 轴旋转的方向（正值）
+
+<img src="/assets/web/202204071502809.png" style="zoom:33%;" />
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>rotateY</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        img {
+            display: block;
+            margin: 100px auto;
+            transition: all 1s;
+        }
+
+        img:hover {
+            transform: rotateY(45deg);
+        }
+    </style>
+</head>
+
+<body>
+<img src="media/pig.jpg" alt="">
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071502066.gif" style="zoom:50%;" />
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>rotateZ</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        img {
+            display: block;
+            margin: 100px auto;
+            transition: all 1s;
+        }
+
+        img:hover {
+            transform: rotateZ(180deg);
+        }
+    </style>
+</head>
+
+<body>
+<img src="media/pig.jpg" alt="">
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071502861.gif" style="zoom:50%;" />
+
+transform: rotate3d(x, y, z, deg)：沿着自定义轴旋转 deg 为角度（了解即可）。
+
+xyz 是表示旋转轴的矢量，表示你是否希望沿着该轴旋转，最后一个表示旋转的角度。
+
+- transform: rotate3d(1, 0, 0, 45deg)：就是沿着 x 轴旋转 45deg
+- transform: rotate3d(0, 1, 0, 45deg)：就是沿着 y 轴旋转 45deg
+- transform: rotate3d(0, 0, 1, 45deg)：就是沿着 z 轴旋转 45deg
+- transform: rotate3d(1, 1, 0, 45deg)：就是沿着对角线（矢量计算）旋转 45deg
+
+<img src="/assets/web/202204071502372.png" style="zoom: 33%;" />
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>rotate3d</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        img {
+            display: block;
+            margin: 100px auto;
+            transition: all 1s;
+        }
+
+        img:hover {
+            /* transform: rotate3d(x,y,z,deg); */
+            /* transform: rotate3d(1, 0, 0, 45deg); */
+            /* transform: rotate3d(0, 1, 0, 45deg); */
+            transform: rotate3d(1, 1, 0, 45deg);
+        }
+    </style>
+</head>
+
+<body>
+<img src="media/pig.jpg" alt="">
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071502404.gif" style="zoom:50%;" />
+
+### transform-origin
+
+**`transform-origin`** CSS属性让你更改一个元素变形的**原点**。
+
+2D 转换元素可以改变元素的 X 和 Y 轴。3D 转换元素，还可以更改元素的 Z 轴。
+
+转换起点是应用转换的点。例如，`rotate()`函数的转换原点是旋转中心。（这个属性的应用原理是先用这个属性的赋值转换该元素，进行变形，然后再用这个属性的值把元素转换回去）
+
+默认的转换原点是 `center`
+
+如果定义了两个或更多值并且没有值的关键字，或者唯一使用的关键字是`center`，则第一个值表示水平偏移量，第二个值表示垂直偏移量。
+
+- 一个值：
+  - 必须是`<length>`，`<percentage>`，或 left, center, right, top, bottom关键字中的一个。
+- 两个值：
+  - 其中一个必须是`<length>`，`<percentage>`，或left, center, right关键字中的一个。
+  - 另一个必须是`<length>`，`<percentage>`，或top, center, bottom关键字中的一个。
+- 三个值：
+  - 前两个值和只有两个值时的用法相同。
+  - 第三个值必须是`<length>`。它始终代表Z轴偏移量。
+
+关键字是方便的简写方法，等同于以下[`<percentage>`值：
+
+| keyword  | value  |
+| :------- | :----- |
+| `left`   | `0%`   |
+| `center` | `50%`  |
+| `right`  | `100%` |
+| `top`    | `0%`   |
+| `bottom` | `100%` |
+
+### transform-style 属性
+
+- 控制子元素是否开启三维立体环境
+- transform-style: flat 子元素不开启 3d 立体空间（默认的）
+- transform-style: preserve-3d; 子元素开启立体空间
+- 代码写给父级，但是影响的是子盒子
+- 这个属性很重要，后面必用
+
+![](/assets/web/202204071516099.png)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>transform-style</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        .box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+            transition: all 2s;
+            /* 让子元素保持3d立体空间环境 */
+            transform-style: preserve-3d;
+        }
+
+        .box:hover {
+            transform: rotateY(60deg);
+        }
+
+        .box div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: pink;
+        }
+
+        .box div:last-child {
+            background-color: purple;
+            transform: rotateX(60deg);
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div></div>
+    <div></div>
+</div>
+</body>
+
+</html>
+```
+
+<img src="/assets/web/202204071517233.gif" style="zoom:50%;" />
+
+【案例：两面翻转的盒子】
+
+<img src="/assets/web/202204071516343.gif" style="zoom:50%;" />
+
+实现步骤：
+
+1. 搭建 HTML 结构
+
+```html
+<div class="box">
+	<div class="front">黑马程序员</div>
+    <div class="back">pink老师等你</div>
+</div>
+```
+
+- box 父盒子里面包含前后两个子盒子
+- box 是翻转的盒子 front 是前面盒子 back 是后面盒子
+
+2. CSS 样式
+
+- box 指定大小，切记要添加 3d 呈现
+- back 盒子要沿着 Y 轴翻转 180 度
+- 最后鼠标经过 box 沿着 Y 旋转 180deg
+
+代码：
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两面翻转的盒子</title>
+    <style>
+        body {
+            perspective: 400px;
+        }
+
+        .box {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 100px auto;
+            transition: all .4s;
+            /* 让背面的紫色盒子保留立体空间 给父级添加的 */
+            transform-style: preserve-3d;
+        }
+
+        .box:hover {
+            transform: rotateY(180deg);
+        }
+
+        .front,
+        .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            font-size: 30px;
+            color: #fff;
+            text-align: center;
+            line-height: 300px;
+        }
+
+        .front {
+            background-color: pink;
+            z-index: 1;
+        }
+
+        .back {
+            background-color: purple;
+            /* 像手机一样 背靠背 旋转 */
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div class="front">黑马程序员</div>
+    <div class="back">pink老师这里等你</div>
+</div>
+</body>
+
+</html>
+```
+
+---
+
+【案例：3D 导航栏】
+
+![](/assets/web/202204071517234.gif)
+
+实现步骤：
+
+1. 搭建 HTML 结构
+
+```html
+<ul>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+         </div>
+    </li>
+</ul>
+```
+
+- li 做导航栏
+- .box 是翻转的盒子 front 是前面盒子 bottom 是底下盒子
+
+2. CSS 样式
+
+- li 设置大小，加透视和 3d 呈现
+- front 需要前移 17.5 像素
+- bottom 需要下移 17.5 像素并且要沿着 x 轴翻转 负 90 度
+- 鼠标放到 box 让盒子旋转 90 度
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D导航栏案例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            margin: 100px;
+        }
+
+        ul li {
+            float: left;
+            margin: 0 5px;
+            width: 120px;
+            height: 35px;
+            list-style: none;
+            /* 一会我们需要给 box 旋转 也需要透视 干脆给 li 加 里面的子盒子都有透视效果 */
+            perspective: 500px;
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all .4s;
+        }
+
+        .box:hover {
+            transform: rotateX(90deg);
+        }
+
+        .front,
+        .bottom {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .front {
+            background-color: pink;
+            z-index: 1;
+            transform: translateZ(17.5px);
+        }
+
+        .bottom {
+            background-color: purple;
+            /* 这个x轴一定是负值 */
+            /* 我们如果有移动 或者其他样式，必须先写我们的移动 */
+            transform: translateY(17.5px) rotateX(-90deg);
+        }
+    </style>
+</head>
+
+<body>
+<ul>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">黑马程序员</div>
+            <div class="bottom">pink老师等你</div>
+        </div>
+    </li>
+</ul>
+</body>
+
+</html>
+```
+
+---
+
+【综合案例：旋转木马】
+
+![](/assets/web/202204071516504.gif)
+
+1. 搭建 HTML 结构
+
+```html
+<section>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</section>
+```
+
+- 里面的 6 个 div 分别是 6 个狗狗图片
+- 注意最终旋转是 section 标签旋转
+
+2. CSS 样式
+
+- 给 body 添加 透视效果 perspective: 1000px;
+- 给 section 添加大小，一定不要忘记添加 3d 呈现效果控制里面的 6 个 div
+  -  别忘记子绝父相，section 要加相对定位
+- 里面 6 个 div 全部绝对定位叠到一起，然后移动不同角度旋转和距离
+  - 注意：旋转角度用 rotateY 距离肯定用 translateZ 来控制
+- 给 section 添加动画 animation，让它可以自动旋转即可
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>综合案例：旋转木马</title>
+    <style>
+        body {
+            perspective: 1000px;
+        }
+
+        section {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 150px auto;
+            transform-style: preserve-3d;
+            /* 添加动画效果 */
+            animation: rotate 10s linear infinite;
+            background: url(media/pig.jpg) no-repeat;
+        }
+
+        section:hover {
+            /* 鼠标放入 section 停止动画 */
+            animation-play-state: paused;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotateY(0);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        section div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(media/dog.jpg) no-repeat;
+        }
+
+        section div:nth-child(1) {
+            transform: rotateY(0) translateZ(300px);
+        }
+
+        section div:nth-child(2) {
+            /* 先旋转好了再 移动距离 */
+            transform: rotateY(60deg) translateZ(300px);
+        }
+
+        section div:nth-child(3) {
+            /* 先旋转好了再 移动距离 */
+            transform: rotateY(120deg) translateZ(300px);
+        }
+
+        section div:nth-child(4) {
+            /* 先旋转好了再 移动距离 */
+            transform: rotateY(180deg) translateZ(300px);
+        }
+
+        section div:nth-child(5) {
+            /* 先旋转好了再 移动距离 */
+            transform: rotateY(240deg) translateZ(300px);
+        }
+
+        section div:nth-child(6) {
+            /* 先旋转好了再 移动距离 */
+            transform: rotateY(300deg) translateZ(300px);
+        }
+    </style>
+</head>
+
+<body>
+<section>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</section>
+</body>
+
+</html>
+```
+
 ## CSS3 过渡
+
+### 过渡
+
+过渡（transition）是 CSS3 中具有颠覆性的特征之一，我们可以在不使用 Flash 动画或 JavaScript 的情况下，当元素从一种样式变换为另一种样式时为元素添加效果。
+
+过渡动画：是从一个状态**渐渐**的过渡到另外一个状态。
+
+可以让我们页面更好看，更动感十足，虽然低版本浏览器不支持（IE9 以下版本） 但是不会影响页面布局。
+
+我们现在经常和 `:hover` 一起搭配使用。
+
+语法：
+
+```css
+transition: 要过渡的属性 花费时间 运动曲线 何时开始;
+```
+
+1. 属性：想要变化的 css 属性，宽度高度、背景颜色、内外边距都可以 。如果想要所有的属性都变化过渡，写一个 `all` 就可以
+2. 花费时间：单位是秒（必须写单位）比如 `0.5s`
+3. 运动曲线：默认是 `ease`（可以省略）
+4. 何时开始：单位是秒（必须写单位）可以设置延迟触发时间默认是 `0s`（可以省略）
+
+<img src="/assets/web/202204071120609.png" style="zoom: 25%;" />
+
+记住过渡的使用口诀：**谁做过渡给谁加！**
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3过渡效果</title>
+    <style>
+        div {
+            width: 200px;
+            height: 100px;
+            background-color: black;
+            /* transition: 变化的属性 花费时间 运动曲线 何时开始; */
+            /* transition: width .5s ease 0s, height .5s ease 1s; */
+            /* 如果想要写多个属性，利用逗号进行分割 */
+            /* transition: width .5s, height .5s; */
+            /* 如果想要多个属性都变化，属性写 all 就可以了 */
+            /* transition: height .5s ease 1s; */
+            /* 谁做过渡，给谁加 */
+            transition: all 0.5s;
+        }
+
+        div:hover {
+            width: 400px;
+            height: 200px;
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>
+```
+
+![](/assets/web/202204071120862.gif)
+
+### 进度条案例
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3过渡练习-进度条</title>
+    <style>
+        .bar {
+            width: 150px;
+            height: 15px;
+            border: 1px solid red;
+            border-radius: 7px;
+            padding: 1px;
+        }
+
+        .bar_in {
+            width: 50%;
+            height: 100%;
+            border-radius: 7px;
+            background-color: red;
+            /* 谁做过渡给谁加 */
+            transition: all .7s;
+        }
+
+        .bar:hover .bar_in {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="bar">
+    <div class="bar_in"></div>
+</div>
+</body>
+</html>
+```
+
+![](/assets/web/202204071122837.gif)
 
 CSS Transformation 呈现的是一种变形结果，而 CSS Transition 呈现的是一种过渡，是一种动画的转换过程。例如：渐显、渐若等。CSS Transformation 和 CSS Transition 是两种完全不同的动画模型，因此 W3C 为动画过渡定义了单独的样式语句。
 
@@ -2348,7 +3980,7 @@ transition-property: none|all| property;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201212132562.gif)
+![图片描述](/assets/web/202201212132562.gif)
 
 > 注意：始终指定 transition-duration 属性，否则持续时间为 0，transition 不会有任何效果。
 
@@ -2414,7 +4046,7 @@ transition-delay: time;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201212133251.gif)
+![图片描述](/assets/web/202201212133251.gif)
 
 当鼠标悬停 2 秒后开始动画，动画执行时间为 5 秒
 
@@ -2472,170 +4104,471 @@ transition-timing-function: 过渡方式;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201212135126.gif)
+![图片描述](/assets/web/202201212135126.gif)
 
 ## CSS3 动画
 
+动画（animation）是 CSS3 中具有颠覆性的特征之一，可通过**设置多个节点来精确控制一个或一组动画**，常用来实现复杂的动画效果。
+
+**相比较过渡，动画可以实现更多变化，更多控制，连续自动播放等效果。**
+
 在 CSS3 中，除了可以使用 Transitions 功能实现动画效果以外，还可以使用 Animations 功能实现更为复杂的动画效果，这些动画可以取代许多网页动画图像、Flash 动画和 JavaScript 实现的效果。到目前为止基本主流浏览器都已经支持 CSS3 动画。
 
-### CSS3 动画属性
+### 动画的基本使用
 
-实际项目中，仅仅通过 3D 转换和过渡是无法满足对动画效果的开发需求，还有个关键的知识点就是 CSS3 动画（也称为关键帧动画）。
+制作动画分为两步：
 
-什么是关键帧动画？即可以通过对一个动画的过程的每一部分的表现都做出要求来实现一个完整动画过程的描述。一个关键帧动画最少包含两部分：
+1. 先定义动画
+2. 再使用（调用）动画
 
-- animation 属性及属性值（动画的名称和运行方式运行时间等）。
-- @keyframes（规定动画的具体实现过程）。
-
-#### @keyframes 介绍
-
-@keyframes 规则内指定一个 CSS 样式和动画将逐步从目前的样式更改为新的样式。利用 CSS3 制作动画效果其原理与 Flash 一样，我们需要定义关键帧处的状态效果，由 CSS3 来驱动产生动画效果。
-
-示例代码：
+用 keyframes 定义动画（类似定义类选择器）
 
 ```css
-@keyframes myfirst {
-  from {
-    background: red;
-  }
-  to {
-    background: yellow;
-  }
-}
-
-@-moz-keyframes myfirst /* Firefox */ {
-  from {
-    background: red;
-  }
-  to {
-    background: yellow;
-  }
-}
-
-@-webkit-keyframes myfirst /* Safari 和 Chrome */ {
-  from {
-    background: red;
-  }
-  to {
-    background: yellow;
-  }
-}
-
-@-o-keyframes myfirst /* Opera */ {
-  from {
-    background: red;
-  }
-  to {
-    background: yellow;
-  }
+@keyframes 动画名称 {
+   0% {
+        width: 100px;
+   }  
+   100% {
+        width: 200px;
+   }
 }
 ```
 
+**动画序列**
+
+- 0% 是动画的开始，100% 是动画的完成。这样的规则就是动画序列
+- 在 @keyframes 中规定某项 CSS 样式，就能创建由当前样式逐渐改为新样式的动画效果
+- 动画是使元素从一种样式逐渐变化为另一种样式的效果。您可以改变任意多的样式任意多的次数
+- 请用百分比来规定变化发生的时间，或用关键词 "from" 和 "to"，等同于 0% 和 100%
+
+### 元素使用动画
+
 ```css
-/* from to 等价于  0% 和  100% */
-/* @keyframes move {
-    from {
-    	transform: translate(0, 0);
-    }
-    to {
-    	transform: translate(300px, 0);
-    }
-} */
-/* 动画序列 */
-/* 1. 可以做多个状态的变化 keyframe 关键帧 */
-/* 2. 里面的百分比要是整数 */
-/* 3. 里面的百分比就是 总的时间（我们这个案例10s）的划分 25% * 10  =  2.5s */
-      @keyframes move {
-        0% {
-          transform: translate(0, 0);
-        }
-        25% {
-          transform: translate(300px, 0);
-        }
-        50% {
-          transform: translate(300px, 300px);
-        }
-        75% {
-          transform: translate(0, 300px);
-        }
-        100% {
-          transform: translate(0, 0);
-        }
-      }
+div {
+	width: 200px;
+	height: 200px;
+	background-color: aqua;
+	margin: 100px auto;
+	/* 调用动画 */
+	animation-name: 动画名称;
+	/* 持续时间 */
+	animation-duration: 持续时间;
+}
 ```
-
-
-
-在 @keyframes 中创建动画时，还需要把它捆绑到某个选择器，否则不会产生动画效果。
-
-通过规定至少需要设置以下两项 CSS3 动画属性，才可以将动画绑定到选择器：
-
-- 规定动画的名称。
-- 规定动画的时长。
-
-这就需要用到 CSS3 动画的另外一个常用属性：**animation 属性**。
-
-#### animation 属性
-
-@keyframes 创建的动画绑定到选择器上。通过 animation 属性就能实现这个操作。animation 属性是一个复合属性，子属性功能描述如下表所示：
-
-| 属性                      | 描述                                                         |
-| ------------------------- | ------------------------------------------------------------ |
-| animation-name            | 规定 @keyframes 动画的名称。                                 |
-| animation-duration        | 规定动画完成一个周期所花费的秒或毫秒。默认是 0。             |
-| animation-timing-function | 规定动画的速度曲线。默认是 "ease"。                          |
-| animation-fill-mode       | 规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。 |
-| animation-delay           | 规定动画何时开始。默认是 0。                                 |
-| animation-iteration-count | 规定动画被播放的次数。默认是 1。                             |
-| animation-direction       | 规定动画是否在下一周期逆向地播放。默认是 "normal"。          |
-
-这里完成一个最简单的动画绑定示例，完成了色块由红色到蓝色渐变动画，该动画只用到了 animation-name 和 animation-duration 两个属性。
-
-示例代码：
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3动画的基本使用</title>
     <style>
-      div {
-        width: 100px;
-        height: 100px;
-        background: red;
-        animation: myfirst 5s;
-        -webkit-animation: myfirst 5s; /* Safari and Chrome */
-      }
+        /* 我们想页面一打开，一个盒子就从左边走到右边 */
+        /* 1. 定义动画 */
+        @keyframes move {
+            /* 开始状态 */
+            0% {
+                transform: translateX(0px);
+            }
+            /* 结束状态 */
+            100% {
+                transform: translateX(1000px);
+            }
+        }
 
-      @keyframes myfirst {
-        from {
-          background: red;
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* 2. 调用动画 */
+            /* 动画名称 */
+            animation-name: move;
+            /* 持续时间 */
+            animation-duration: 2s;
         }
-        to {
-          background: blue;
-        }
-      }
-
-      @-webkit-keyframes myfirst /* Safari and Chrome */ {
-        from {
-          background: red;
-        }
-        to {
-          background: blue;
-        }
-      }
     </style>
-  </head>
-  <body>
-    <div></div>
-  </body>
+</head>
+
+<body>
+<div></div>
+</body>
+
 </html>
 ```
 
-显示效果：
+![](/assets/web/202204071149598.gif)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201212147414.gif)
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画序列</title>
+    <style>
+        /* from to 等价于 0% 和 100% */
+        /*
+        @keyframes move {
+            from {
+                transform: translate(0, 0);
+            }
+            to {
+                transform: translate(1000px, 0);
+            }
+        }
+        */
+
+        /* 动画序列 */
+        /* 1. 可以做多个状态的变化 keyframe 关键帧 */
+        /* 2. 里面的百分比要是整数 */
+        /* 3. 里面的百分比就是 总的时间（我们这个案例 10s）的划分 25% * 10 = 2.5s */
+
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(1000px, 0)
+            }
+            50% {
+                transform: translate(1000px, 500px);
+            }
+            75% {
+                transform: translate(0, 500px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            animation-name: move;
+            animation-duration: 10s;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+
+</div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071148029.gif)
+
+### 动画常用属性
+
+
+| **属性**                  | **描述**                                                     |
+| ------------------------- | ------------------------------------------------------------ |
+| @keyframes                | 规定动画                                                     |
+| animation                 | 所有动画属性的简写属性，除了animation-play-state 属性        |
+| animation-name            | 规定 @keyframes 动画的名称（必须的）                         |
+| animation-duration        | 规定动画完成一个周期所花费的秒或毫秒，默认是 0（必须的）     |
+| animation-timing-function | 规定动画的速度曲线，默认是 “ease”                            |
+| animation-delay           | 规定动画何时开始，默认是 0                                   |
+| animation-iteration-count | 规定动画被播放的次数，默认是 1，还有 infinite                |
+| animation-direction       | 规定动画是否在下一周期逆向播放，默认是 "normal", alternate 逆播放 |
+| animation-play-state      | 规定动画是否正在运行或暂停。默认是 "running", 还有 "paused"  |
+| animation-fill-mode       | 规定动画结束后状态，保持 forwards 回到起始 backwards         |
+
+### 动画简写属性
+
+animation：动画名称 持续时间 运动曲线 何时开始 播放次数 是否反方向 动画起始或者结束的状态。
+
+```css
+animation: myfirst 5s linear 2s infinite alternate;
+```
+
+- 简写属性里面不包含 animation-play-state
+- 暂停动画：animation-play-state: puased; 经常和鼠标经过等其他配合使用
+- 想要动画走回来，而不是直接跳回来：animation-direction: alternate
+- 盒子动画结束后，停在结束位置：animation-fill-mode: forwards 
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画属性</title>
+    <style>
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(1000px, 0);
+            }
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            /* 动画名称 */
+            animation-name: move;
+            /* 持续时间 */
+            /* animation-duration: 2s; */
+            /* 运动曲线 */
+            /* animation-timing-function: ease; */
+            /* 何时开始 */
+            animation-delay: 1s;
+            /* 重复次数 iteration 重复的 conut 次数 infinite 无限 */
+            /* animation-iteration-count: infinite; */
+            /* 是否反方向播放 默认的是 normal 如果想要反方向 就写 alternate */
+            /* animation-direction: alternate; */
+            /* 动画结束后的状态 默认的是 backwards 回到起始状态 我们可以让他停留在结束状态 forwards */
+            /* animation-fill-mode: forwards; */
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            /* animation: move 2s linear 0s 1 alternate forwards; */
+            /* 前面 2 个属性 name duration 一定要写 */
+            /* animation: move 2s linear alternate forwards; */
+        }
+
+        div:hover {
+            /* 鼠标经过 div 让这个 div 停止动画，鼠标离开就继续动画 */
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+
+</div>
+</body>
+
+</html>
+```
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大数据热点图</title>
+    <style>
+        body {
+            background-color: #333;
+        }
+
+        .map {
+            position: relative;
+            width: 747px;
+            height: 616px;
+            background: url(media/map.png) no-repeat;
+            margin: 0 auto;
+        }
+
+        .city {
+            position: absolute;
+            top: 227px;
+            right: 193px;
+            color: #fff;
+        }
+
+        .tb {
+            /* 此处只能使用 top right 因为这样才能层叠 city，
+            否则如果使用 bottom 的话，还会基础 city 的 top，bottom 与 top 优先执行 top */
+            top: 500px;
+            right: 80px;
+        }
+
+        .dotted {
+            width: 8px;
+            height: 8px;
+            background-color: #09f;
+            border-radius: 50%;
+        }
+
+        .city div[class^="pulse"] {
+            /* 保证我们小波纹在父盒子里面水平垂直居中 放大之后就会中心向四周发散 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            box-shadow: 0 0 12px #009dfd;
+            border-radius: 50%;
+            animation: pulse 1.2s linear infinite;
+        }
+
+        .city div.pulse2 {
+            animation-delay: 0.4s;
+        }
+
+        .city div.pulse3 {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes pulse {
+            0% {
+            }
+            70% {
+                /* transform: scale(5);  我们不要用scale 因为他会让 阴影变大*/
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+            }
+            100% {
+                width: 70px;
+                height: 70px;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="map">
+    <div class="city">
+        <div class="dotted"></div>
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+        <div class="pulse3"></div>
+    </div>
+    <div class="city tb">
+        <div class="dotted"></div>
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+        <div class="pulse3"></div>
+    </div>
+</div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071148056.gif)
+
+### 速度曲线细节
+
+animation-timing-function：规定动画的速度曲线，默认是 "ease"。
+
+| **值**      | **描述**                                     |
+| ----------- | -------------------------------------------- |
+| linear      | 动画从头到尾的速度是相同的（匀速）           |
+| ease        | 默认。动画以低速开始，然后加快，在结束前变慢 |
+| ease-in     | 动画以低速开始                               |
+| ease-out    | 动画以低速结束                               |
+| ease-in-out | 动画以低速开始和结束                         |
+| steps()     | 指定了时间函数中的间隔数量（步长）           |
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>速度曲线步长</title>
+    <style>
+        div {
+            overflow: hidden;
+            font-size: 20px;
+            width: 0;
+            height: 30px;
+            background-color: pink;
+            /* 让我们的文字强制一行内显示 */
+            white-space: nowrap;
+            /* steps 就是分几步来完成我们的动画 有了 steps 就不要在写 ease 或者 linear 了 */
+            animation: w 4s steps(10) forwards;
+        }
+
+        @keyframes w {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div>世纪佳缘我在这里等你</div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071148041.gif)
+
+```html
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>奔跑的熊大案例</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+
+        div {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background: url(media/bear.png) no-repeat;
+            /* 我们元素可以添加多个动画，用逗号分隔 */
+            animation: bear .4s steps(8) infinite, move 3s forwards;
+        }
+
+        @keyframes bear {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: -1600px 0;
+            }
+        }
+
+        @keyframes move {
+            0% {
+                left: 0;
+            }
+            100% {
+                left: 50%;
+                /* margin-left: -100px; */
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div></div>
+</body>
+
+</html>
+```
+
+![](/assets/web/202204071149599.png)
+
+![](/assets/web/202204071149600.gif)
 
 ## CSS3 怪异盒模型
 
@@ -2645,24 +4578,28 @@ transition-timing-function: 过渡方式;
 
 大多数的浏览器都采用 W3C 标准，而 IE 采用的是 IE 标准。而怪异模式是指“部分浏览器在支持 W3C 标准的同时还保留了原先的解析模式”，怪异模式主要表现在 IE 内核的浏览器中。
 
+**注意宽度不算margin**
+
 ### 标准盒模型
 
-![image-20200817205235441](https://gitee.com/Dye/statics/raw/master/img/202201212156481.png)
+![image-20200817205235441](/assets/web/202201212156481.png)
 
 由上图可以看到，在标准盒模型下，width 和 height 是内容区域即 content 的 width 和 height。
 
 ```txt
-一个块的总宽度= width + margin(左右) + padding(左右) + border(左右)
+一个块的总宽度= width + padding(左右) + border(左右)
 ```
 
 ### 怪异盒模型
 
-![image-20200817205407394](https://gitee.com/Dye/statics/raw/master/img/202201212157788.png)
+![image-20200817205407394](/assets/web/202201212157788.png)
 
 由上图可见，IE 盒模型或怪异盒模型和标准盒子模型最大的区别就是：width 和 height 除了 content 区域外，还包含 padding 和 border。
 
+如果盒子模型我们改为了 box-sizing: border-box， 那 padding 和 border 就不会撑大盒子了（前提 padding 和 border 不会超过 width 宽度）
+
 ```txt
-一个块的总宽度= width + margin(左右)（即width已经包含了padding和border值）
+一个块的总宽度= width （即width已经包含了padding和border值）
 ```
 
 ### 解决方案
@@ -2682,720 +4619,6 @@ box-sizing: content-box || border-box || inherit || initial;
 当设置为 box-sizing:content-box 时，将采用标准盒子模型解析计算，也是默认盒子模型； 
 
 **当设置为 box-sizing:border-box 时，将采用怪异盒子模型解析计算。**
-
-## CSS3 弹性盒子
-
-### 弹性盒子模型介绍
-
-CSS3 弹性盒（ Flexible Box 或 flexbox）是一种新的布局模式。引入弹性盒布局模型的目的是提供一种更加有效的方式来对一个容器中的子元素进行排列、对齐和分配空白空间。使用弹性盒子可以轻松的实现自适应浏览器布局或自适应字体大小的弹性布局。
-
-传统的盒子布局方式都是基于 HTML 流的垂直布局。盒子在页面中自上而下的依次排列。使用弹性盒子模型可以规定特殊的排列顺序，也可以将其反正排列。当需要开启弹性盒子模型的时候，只需要设置该盒子的 display 属性为 flex 或 inline-flex 即可。语法如下：
-
-```css
-display：flex|inline-flex
-```
-
-### flex 布局格式设置
-
-弹性盒子由弹性容器 (Flex container) 和弹性子元素 (Flex item) 组成。弹性容器通过设置 display 属性的值为 flex 或 inline-flex 将其定义为弹性容器。弹性容器内包含了一个或多个弹性子元素。
-
-### flex 布局容器属性
-
-#### flex-direction 属性
-
-flex-direction 属性指定了弹性子元素在父容器中的排列方向和顺序。语法如下：
-
-```css
-flex-direction: row | row-reverse | column | column-reverse;
-```
-
-| 属性值         | 描述                                                     |
-| -------------- | -------------------------------------------------------- |
-| row            | 横向从左到右排列（左对齐），默认的排列方式。             |
-| row-reverse    | 反转横向排列（右对齐），从后往前排，最后一项排在最前面。 |
-| column         | 纵向排列                                                 |
-| column-reverse | 反转纵向排列，从后往前排，最后一项排在最上面。           |
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      div {
-        width: 100px;
-        height: 100px;
-      }
-      #content {
-        width: 300px;
-        height: 300px;
-        background-color: antiquewhite;
-        display: flex;
-        flex-direction: row-reverse;
-      }
-      .left {
-        background-color: gray;
-      }
-      .center {
-        background-color: silver;
-      }
-      .right {
-        background-color: darkgray;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果:
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201231348686.png)
-
-#### flex-wrap 属性
-
-flex-wrap 属性用于指定弹性盒子的子元素换行方式。语法如下：
-
-```css
-flex-wrap: nowrap|wrap|wrap-reverse|initial|inherit;
-```
-
-| 属性值       | 描述                                                         |
-| ------------ | ------------------------------------------------------------ |
-| nowrap       | 默认， 弹性容器为单行。该情况下弹性子项可能会溢出容器。      |
-| wrap         | 弹性容器为多行。该情况下弹性子项溢出的部分会被放置到新行，子项内部会发生断行。 |
-| wrap-reverse | 反转 wrap 排列。                                             |
-
-示例代码：
-
-```css
-//省略其他代码....
-<style>
-        div{width: 100px; height: 100px}
-        #content{width: 240px; height: 300px; background-color: antiquewhite;display: flex; flex-wrap:nowrap}
-        .left{background-color: gray}
-        .center{background-color: silver}
-        .right{background-color: darkgray}
-</style>
-//省略其他代码....
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201231348714.png)
-
-上面的示例，容器宽度为 240 px ，容器中有 3 个宽度为 100 px 的子元素，当属性值设置成 `nowrap` 时，项目会强行等分容器宽度从而不换行，这时子元素的实际宽度也就只有 80 px 而非设置的 100 px 。
-
-当示例代码修改设置为`flex-wrap:wrap`或者`flex-wrap:wrap-reverse`时页面显示效果如下：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201231348914.png)
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201231348015.png)
-
-#### flex-flow 属性
-
-flex-flow 属性是 flex-deriction 与 flex-wrap 属性的简写集合，默认属性为 row nowrap ，即横向排列，且不换行，如果需要控制项目排列与换行，推荐使用此属性，而非单独写两个。
-
-#### justify-content 属性
-
-内容对齐（justify-content）属性应用在弹性容器上，把弹性项沿着弹性容器的主轴线（main axis）对齐。justify-content 语法如下：
-
-```css
-justify-content: flex-start | flex-end | center | space-between | space-around;
-```
-
-- flex-start ： 弹性项目向行头紧挨着填充。这个是默认值。第一个弹性项的 main-start 外边距边线被放置在该行的 main-start 边线，而后续弹性项依次平齐摆放。
-- flex-end ： 弹性项目向行尾紧挨着填充。第一个弹性项的 main-end 外边距边线被放置在该行的 main-end 边线，而后续弹性项依次平齐摆放。
-- center ： 弹性项目居中紧挨着填充。（如果剩余的自由空间是负的，则弹性项目将在两个方向上同时溢出）。
-- space-between ： 弹性项目平均分布在该行上。如果剩余空间为负或者只有一个弹性项，则该值等同于 flex-start 。否则，第 1 个弹性项的外边距和行的 main-start 边线对齐，而最后 1 个弹性项的外边距和行的 main-end 边线对齐，然后剩余的弹性项分布在该行上，相邻项目的间隔相等。
-- space-around ： 弹性项目平均分布在该行上，两边留有一半的间隔空间。如果剩余空间为负或者只有一个弹性项，则该值等同于 center 。否则，弹性项目沿该行分布，且彼此间隔相等（比如是 20 px ），同时首尾两边和弹性容器之间留有一半的间隔（1/2*20 px=10 px ）。
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201231355493.png)
-
-#### align-items 属性
-
-align-items 设置或检索弹性盒子元素在侧轴（纵轴）方向上的对齐方式。语法如下：
-
-```css
-align-items: flex-start | flex-end | center | baseline | stretch;
-```
-
-- flex-start：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。
-- flex-end：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。
-- center：弹性盒子元素在该行的侧轴（纵轴）上居中放置。（如果该行的尺寸小于弹性盒子元素的尺寸，则会向两个方向溢出相同的长度）。
-- baseline：如弹性盒子元素的行内轴与侧轴为同一条，则该值与 'flex-start' 等效。其它情况下，该值将参与基线对齐。
-- stretch：如果指定侧轴大小的属性值为 'auto' ，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照 'min/max-width/height' 属性的限制。
-
-属性值默认为 stretch ，即如果项目没设置高度或高度为 auto ，则占满整个容器。示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      div {
-        width: 100px;
-      }
-      #content {
-        width: 240px;
-        height: 300px;
-        background-color: antiquewhite;
-        display: flex;
-        align-items: stretch;
-      }
-      .left {
-        background-color: gray;
-      }
-      .center {
-        background-color: silver;
-      }
-      .right {
-        background-color: darkgray;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232203599.png)
-
-属性值 flex-start 会让项目在纵轴紧贴容器顶部，flex-end 与之相反：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232204634.png)
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232204172.png)
-
-属性值 center 使用最多，自然不会陌生，在纵轴中心位置排列：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232204976.png)
-
-<u>属性值 baseline 比较特殊，它让项目以第一行文字的基线为参照进行排列。</u>
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      div {
-        width: 100px;
-      }
-      #content {
-        width: 240px;
-        height: 300px;
-        background-color: antiquewhite;
-        display: flex;
-        align-items: baseline;
-      }
-      .left {
-        background-color: gray;
-        height: 100px;
-      }
-      .center {
-        background-color: silver;
-        height: 150px;
-      }
-      .right {
-        background-color: darkgray;
-        height: 100px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-    </div>
-  </body>
-</html>
-```
-
-效果如下所示：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232204339.png)
-
-**注意，常理来说 justify-content 与 align-items 默认分别处理项目横轴，纵轴的对齐方式，但如果我们修改了 flex-direction 为 column ，它们处理的轴向会交换，也就是 justify-content 处理纵轴，align-items 处理横轴。**
-
-#### align-content
-
-align-content 属性用于控制**多行项目**的对齐方式，如果项目只有一行则不会起作用。语法如下：
-
-```css
-align-content: flex-start | flex-end | center | space-between | space-around |
-  stretch;
-```
-
-| 属性值        | 描述                                                         |
-| ------------- | ------------------------------------------------------------ |
-| stretch       | 默认。各行将会伸展以占用剩余的空间。                         |
-| flex-start    | 各行向弹性盒容器的起始位置堆叠。                             |
-| flex-end      | 各行向弹性盒容器的结束位置堆叠。                             |
-| center        | 各行向弹性盒容器的中间位置堆叠。                             |
-| space-between | 各行在弹性盒容器中平均分布。                                 |
-| space-around  | 各行在弹性盒容器中平均分布，两端保留子元素与子元素之间间距大小的一半。 |
-
-默认 stretch ，即在项目没设置高度，或高度为 auto 情况下让项目填满整个容器，与 align-items 类似。注意，如下演示的 12 个项目我均没有设置高度。
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      div {
-        width: 60px;
-      }
-      #content {
-        width: 300px;
-        height: 300px;
-        background-color: antiquewhite;
-        display: flex;
-        flex-wrap: wrap;
-        align-content: stretch;
-      }
-      .left {
-        background-color: gray;
-      }
-      .center {
-        background-color: silver;
-      }
-      .right {
-        background-color: darkgray;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-      <div class="left">div4块</div>
-      <div class="center">div5块</div>
-      <div class="right">div6块</div>
-      <div class="left">div7块</div>
-      <div class="center">div8块</div>
-      <div class="right">div9块</div>
-      <div class="left">div10块</div>
-      <div class="center">div11块</div>
-      <div class="right">div12块</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232212165.png)
-
-属性值为：flex-start ，center，flex-end 与 align-items 属性表现一致：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232212536.png)
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232212859.png)
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232212611.png)
-
-属性值 space-around 与 justify-content 保持一致，即项目之间间距为上下两端项目与容器间距两倍。
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232212778.png)
-
-属性值 space-between 为上下两侧项目紧贴容器。
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232212523.png)
-
-### flex 布局子元素属性
-
-#### order
-
-排序，用整数值来定义排列顺序，**数值小的排在前面**。可以为负值。语法：
-
-```css
-order：<integer>
-```
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      div {
-        width: 60px;
-        height: 60px;
-      }
-      #content {
-        width: 300px;
-        height: 300px;
-        background-color: antiquewhite;
-        display: flex;
-      }
-      .left {
-        background-color: gray;
-        order: 3;
-      }
-      .center {
-        background-color: silver;
-        order: 2;
-      }
-      .right {
-        background-color: darkgray;
-        order: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232213570.png)
-
-#### flex-grow
-
-用于决定项目在有剩余空间的情况下是否按比例放大，默认不放大。语法：
-
-```css
-flex-grow: number|initial|inherit;
-```
-
-| 值      | 描述                                                         |
-| ------- | ------------------------------------------------------------ |
-| number  | 一个数字，规定项目将相对于其他灵活的项目进行扩展的量。默认值是 0。 |
-| initial | 设置该属性为它的默认值。                                     |
-| inherit | 从父元素继承该属性。                                         |
-
-> 注意：即便设置了固定宽度也会放大。
-
-示例代码：
-
-```css
-<style>
-        div{width: 60px; height: 60px}
-        #content{width: 300px; height: 300px;
-         background-color: antiquewhite;display: flex; }
-        .left{background-color: gray; flex-grow: 1}
-        .center{background-color: silver; }
-        .right{background-color: darkgray; }
-</style>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232216536.png)
-
-假设父元素宽400px，有两个子元素：A和B。A宽为100px，B宽为200px。 则空余空间为 400-（100+200）= 100px。 如果A，B都不索取剩余空间，则有100px的空余空间。
-
-如果A索取剩余空间:设置flex-grow为1，B不索取。则最终A的大小为 自身宽度（100px）+ 剩余空间的宽度（100px）= 200px 。
-
-**如果A，B都设索取剩余空间，A设置flex-grow为1，B设置flex-grow为2。则最终A的大小为 自身宽度（100px）+ A获得的剩余空间的宽度（100px (1/(1+2))）,最终B的大小为 自身宽度（200px）+ B获得的剩余空间的宽度（100px (2/(1+2))）**
-👆对剩余空间进行比例分配
-
-#### flex-basis
-
-flex-basis 属性用于设置或检索弹性盒伸缩基准值。语法如下：
-
-```css
-flex-basis: number|auto|initial|inherit;
-```
-
-| 值      | 描述                                                         |
-| ------- | ------------------------------------------------------------ |
-| number  | 一个长度单位或者一个百分比，规定灵活项目的初始长度。         |
-| auto    | 默认值。长度等于灵活项目的长度。如果该项目未指定长度，则长度将根据内容决定。 |
-| initial | 设置该属性为它的默认值。                                     |
-| inherit | 从父元素继承该属性。                                         |
-
-> 注意：如果元素不是弹性盒对象的元素，则 flex-basis 属性不起作用。
-
-默认 auto ，用于设置项目宽度，默认 auto 时，项目会保持默认宽度，或者以 width 为自身的宽度，但如果设置了 flex-basis ，**权重会 width 属性高**，因此会覆盖 widtn 属性。
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      #content {
-        width: 300px;
-        height: 100px;
-        background-color: antiquewhite;
-        display: flex;
-      }
-      #content div {
-        flex-grow: 0;
-        flex-shrink: 0;
-        flex-basis: 40px;
-        width: 100px;
-      }
-      .left {
-        background-color: gray;
-      }
-      .center {
-        background-color: silver;
-      }
-      .right {
-        background-color: darkgray;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232219812.png)
-
-上图中先设置了 flex-basis 属性，后设置了 width 属性，但宽度依旧以 flex-basis 属性为准。
-
-#### flex-shrink
-
-flex-shrink 属性指定了 flex 元素的收缩规则。flex 元素仅在默认宽度之和大于容器的时候才会发生收缩，其收缩的大小是依据 flex-shrink 的值。语法：
-
-```css
-flex-shrink: number|initial|inherit;
-```
-
-| 值      | 描述                                                         |
-| ------- | ------------------------------------------------------------ |
-| number  | 一个数字，规定项目将相对于其他灵活的项目进行收缩的量。默认值是 1。 |
-| initial | 设置该属性为它的默认值。                                     |
-| inherit | 从父元素继承该属性。                                         |
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      #content {
-        width: 300px;
-        background-color: antiquewhite;
-        display: flex;
-      }
-      #content div {
-        flex-basis: 120px;
-      }
-      .left {
-        background-color: gray;
-        flex-shrink: 1;
-      }
-      .center {
-        background-color: silver;
-      }
-      .right {
-        background-color: darkgray;
-        flex-shrink: 4;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">
-      <div class="left">div1块</div>
-      <div class="center">div2块</div>
-      <div class="right">div3块</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232219192.png)
-
-上图中第二个子属性 flex-shrink 为 0，所以自身不会缩小。
-
-
-
-假设父元素宽400px，有两子元素：A和B。A宽为200px，B宽为300px。 则A，B总共超出父元素的宽度为(200+300)- 400 = 100px。 如果A，B都不减小宽度，即都设置flex-shrink为0，则会有100px的宽度超出父元素。 
-
-如果A不减小宽度:设置flex-shrink为0，B减小(`flex-shrink:1;`)。则最终B的大小为 自身宽度(300px)- 总共超出父元素的宽度(100px)= 200px 
-
-如果A，B都减小宽度，A设置flex-shirk为3，B设置flex-shirk为2。则最终A的大小为 自身宽度(200px)- A减小的宽度(100px * (200px * 3/(200 * 3 + 300 * 2))) = 150px,最终B的大小为 自身宽度(300px)- B减小的宽度(100px * (300px * 2/(200 * 3 + 300 * 2))) = 250px
-
-$超出宽度*(widthA*系数A/(widthA*系数A+(widthB*系数B))$
-
-不再是普通的分配超出元素，对自身进行裁剪，所以要把自身宽度加入
-
-#### flex
-
-flex 属性用于指定弹性子元素如何分配空间。语法如下：
-
-```css
-flex: auto | initial | none | inherit | [ flex-grow ] || [ flex-shrink ] || [
-  flex-basis ];
-```
-
-flex是flex-grow，flex-shrink, flex-basis缩写形式(大小基本)
-
-flex 是一个复合属性，他可以拆解为多个子属性。其中个值的含义如下：
-
-|                 |                                |
-| --------------- | ------------------------------ |
-| auto            | 计算值为 1 1 auto              |
-| initial         | 计算值为 0 1 auto              |
-| none            | 计算值为 0 0 auto              |
-| inherit         | 从父元素继承                   |
-| [ flex-grow ]   | 定义弹性盒子元素的扩展比率。   |
-| [ flex-shrink ] | 定义弹性盒子元素的收缩比率。   |
-| [ flex-basis ]  | 定义弹性盒子元素的默认基准值。 |
-
-- 当 flex 取值为一个**非负数字**，则该数字为 flex-grow 值，flex-shrink 取 1，flex-basis 取 0%，如下是等同的：
-
-`.item {flex: 1;}`=`.item {flex-grow: 1; flex-shrink: 1; flex-basis: 0%;}`
-
-- 当 flex **取值为一个长度或百分比**，则视为 flex-basis 值，flex-grow 取 1，flex-shrink取 1，有如下等同情况（注意 0% 是一个百分比而不是一个非负数字）：
-
-`.item-1 {flex: 0%;}`=`.item-1 { flex-grow: 1; flex-shrink: 1; flex-basis: 0%;} `
-
-`.item-2 {flex: 24px;} `=`.item-2 { flex-grow: 1; flex-shrink: 1; flex-basis: 24px;}`
-
-- 当 flex取值为**两个非负数字**，则分别视为 flex-grow和 flex-shrink的值，flex-basis取 0%，如下是等同的：
-
-`.item {flex: 2 3;} `=`.item { flex-grow: 2; flex-shrink: 3; flex-basis: 0%;} `
-
-- 当 flex取值为**一个非负数字和一个长度或百分比**，则分别视为 flex-grow和 flex-basis的值，flex-shrink取 1，如下是等同的：
-
-` .item {flex: 2333 3222px;}`=` .item { flex-grow: 2333; flex-shrink: 1; flex-basis: 3222px;} `
-
-> 数字依次给grow或者shrink，百分比或者长度是给basis的！！！！
-
-#### align-self
-
-align-self 属性用于设置**弹性元素自身**在侧轴（纵轴）方向上的对齐方式。各值的表现与父容器的 align-items 属性完全一致。语法如下：
-
-```txt
-align-self: auto | flex-start | flex-end | center | baseline | stretch
-```
-
-各个值解析:
-
-- auto：如果 'align-self' 的值为 'auto' ，则其计算值为元素的父元素的 'align-items' 值，如果其没有父元素，则计算值为 'stretch' 。
-- flex-start：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。
-- flex-end：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。
-- center：弹性盒子元素在该行的侧轴（纵轴）上居中放置。（如果该行的尺寸小于弹性盒子元素的尺寸，则会向两个方向溢出相同的长度）。
-- baseline：如弹性盒子元素的行内轴与侧轴为同一条，则该值与 'flex-start' 等效。其它情况下，该值将参与基线对齐。
-- stretch：如果指定侧轴大小的属性值为 'auto' ，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照 'min/max-width/height' 属性的限制。
-
-示例代码：
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <style>
-      .flex-container {
-        display: -webkit-flex;
-        display: flex;
-        width: 400px;
-        height: 250px;
-        background-color: lightgrey;
-      }
-
-      .flex-item {
-        background-color: cornflowerblue;
-        width: 60px;
-        min-height: 100px;
-        margin: 10px;
-      }
-
-      .item1 {
-        -webkit-align-self: flex-start;
-        align-self: flex-start;
-      }
-      .item2 {
-        -webkit-align-self: flex-end;
-        align-self: flex-end;
-      }
-
-      .item3 {
-        -webkit-align-self: center;
-        align-self: center;
-      }
-
-      .item4 {
-        -webkit-align-self: baseline;
-        align-self: baseline;
-      }
-
-      .item5 {
-        -webkit-align-self: stretch;
-        align-self: stretch;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="flex-container">
-      <div class="flex-item item1">flex-start</div>
-      <div class="flex-item item2">flex-end</div>
-      <div class="flex-item item3">center</div>
-      <div class="flex-item item4">baseline</div>
-      <div class="flex-item item5">stretch</div>
-    </div>
-  </body>
-</html>
-```
-
-显示效果：
-
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201232220008.png)
-
-## CSS3多列
-
-在使用 CSS2 进行页面布局时，若是需要在同一版面进行类似报纸和杂志类的多列页面显示时通常使用 float 或者 position 属性实现。但是使用这些属性会存在一些缺点。例如若是两栏或者多栏内元素的内容高度不一致时则底部很难对齐。因此，在 CSS3 中增加了一些新的布局方式。使用这些新的布局方式，除了可以修改之前存在的问题之外，还可以进行更便捷、更复杂的页面布局。
-
-多列布局适合纯文档版式设计而不适合做网页结构布局，灵活使用多列布局特性可以实现在多列中显示文字和图片，从而节省大量的网页控制。如果网页上的文本内容很长，多列布局特性就能够发挥它的用武之地。
-
-多列与弹性盒子布局是有区别的。在使用多列布局的时候各列宽度必须相同，在指定列宽时只能为所有的列定义一个统一的宽度。另外，再使用多列布局时，也不能具体指定那列中显示什么内容。因此多列布局更适用于显示文章的内容。不使用与网页结构布局
 
 ### 多列属性
 
@@ -3449,7 +4672,7 @@ columns 属性初始值根据元素个别属性而定，适用于不可替换的
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261844597.png)
+![图片描述](/assets/web/202201261844597.png)
 
 相对于单独设置 column-width 或 column-count，columns 要更加灵活。
 
@@ -3499,9 +4722,9 @@ column-width: auto|length;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261853308.png)
+![图片描述](/assets/web/202201261853308.png)
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261853361.png)
+![图片描述](/assets/web/202201261853361.png)
 
 > 注意：改变浏览器的大小，显示列数随之变化。
 
@@ -3547,7 +4770,7 @@ column-count 属性的初始值为 auto，适用于不可替换的块元素，�
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261858072.png)
+![图片描述](/assets/web/202201261858072.png)
 
 **通过示例可以看出，当定义了列数后不论列宽是多少，都会按照制定的列数进行分列。当浏览器变化宽度时也同样按指定列数进行分列。**
 
@@ -3584,7 +4807,7 @@ column-gap: length|normal;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261902564.png)
+![图片描述](/assets/web/202201261902564.png)
 
 对比上一个示例可以看出，列间距发生了变化。
 
@@ -3628,7 +4851,7 @@ column-rule: column-rule-width column-rule-style column-rule-color;
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261903164.png)
+![图片描述](/assets/web/202201261903164.png)
 
 #### 定义跨列显示
 
@@ -3677,7 +4900,7 @@ column-span 属性初始值为 1，适用于静态的、非浮动的元素。
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261904110.png)
+![图片描述](/assets/web/202201261904110.png)
 
 #### 定义列高度
 
@@ -3714,7 +4937,7 @@ column-fill 属性的初始值为 balance，适用于多列布局元素。
 
 显示效果：
 
-![图片描述](https://gitee.com/Dye/statics/raw/master/img/202201261905455.png)
+![图片描述](/assets/web/202201261905455.png)
 
 ## CSS3 多媒体查询
 
@@ -3817,3 +5040,110 @@ CSS3 的多媒体查询继承了 CSS2 多媒体类型的所有思想：取代了
 ```
 
 这里对 width 应用了 min 和 max 来设定查询范围。这样 phone.css 文件只会引入视口宽度介于 200 像素至 360 像素的显示屏设备。
+
+## CSS3其它特性
+
+1. 图片变模糊
+2. 计算盒子宽度 width:calc 函数
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片模糊处理filter</title>
+    <style>
+        img {
+            /* blur 是一个函数 小括号里面数值越大，图片越模糊 注意数值要加 px 单位 */
+            filter: blur(15px);
+        }
+
+        img:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body>
+<img src="images/pink.jpg" alt="">
+</body>
+</html>
+```
+
+![](/assets/web/202204071117317.gif)
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3属性calc函数</title>
+    <style>
+        .father {
+            width: 500px;
+            height: 500px;
+            background-color: black;
+        }
+
+        .son {
+            /* width: 300px; */
+            /* width: calc(500px - 100px); */
+            width: calc(100% - 100px);
+            height: 200px;
+            background-color: salmon;
+        }
+    </style>
+</head>
+<body>
+<!-- 需求：我们的子盒子宽度永远比父盒子小 100 像素 -->
+<div class="father">
+    <div class="son"></div>
+</div>
+</body>
+</html>
+```
+
+<img src="/assets/web/202204071117250.png" style="zoom:50%;" />
+
+### CSS3滤镜 filter
+
+filter CSS 属性将模糊或颜色偏移等图形效果应用于元素。
+
+```css
+filter: 函数(); 例如：filter: blur(5px); blur 模糊处理，数值越大越模糊
+```
+
+![](/assets/web/202204071117619.png)
+
+### CSS3 calc 函数
+
+calc() 此 CSS 函数让你在声明 CSS 属性值时执行一些计算。
+
+```css
+width: calc(100% - 80px);
+```
+
+括号里面可以使用 `+` `-` `*` `/` 来进行计算。
+
+
+
+
+
+## 狭义的 HTML5 CSS3
+
+1. HTML5 结构本身
+
+   ![](/assets/web/202204071117579.png)
+
+2. CSS3 相关样式
+
+   ![](/assets/web/202204071117940.png)
+
+## 广义的 HTML5
+
+1. 广义的 HTML5 是 HTML5 + CSS3 + JavaScript
+2. 这个集合有时称为 H5
+3. 虽然 HTML5 的一些特性仍然不被某些浏览器支持，但是它是一种发展趋势
